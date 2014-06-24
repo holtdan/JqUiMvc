@@ -1,0 +1,21 @@
+﻿@model JqUiMvc.Models.TaskViewModel
+@using JqUiMvc.Models
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    <div class="col-md-2 beDiv" id="steps">
+        @Html.Partial("_StepsNav", (IEnumerable<TaskStep>)Model.Steps)
+    </div>
+    <div class="col-md-10 beDiv" id="workArea">
+        @Html.Partial("_Sortables")
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#sortable").sortable();
+            $("#sortable").disableSelection();
+        });
+    </script>
+}
