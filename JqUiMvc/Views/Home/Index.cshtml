@@ -4,10 +4,7 @@
     ViewBag.Title = "Home Page";
 }
 <div class="row">
-    <div class="col-md-2 beDiv" id="steps">
-        @Html.Partial("_StepsNav", (IEnumerable<TaskStep>)Model.Steps)
-    </div>
-    <div class="col-md-10 beDiv" id="workArea">
+    <div class="col-md-12 beDiv">
         @Html.Partial("_Sortables")
     </div>
 </div>

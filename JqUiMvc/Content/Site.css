@@ -1,5 +1,5 @@
 ﻿#steps{
-    background-color: lightgray;
+    background-color: transparent;
 }
 #workArea{
     background-color: darkgray;
@@ -8,9 +8,10 @@ body {
     padding-top: 70px;
     padding-bottom: 20px;
 }
-.beDiv{
-    border: solid 1px;
-    padding: 5px;
+.beDiXXXv{
+    /*border: solid 1px;*/
+    margin: 0px;
+    padding: 0px;
 }
 /* Set padding to keep content from hitting the edges */
 .body-content {

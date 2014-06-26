@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using JqUiMvc.Models
+@model TaskViewModel
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -28,7 +30,32 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div class="row">
+            <div class="col-md-2" id="steps">
+                <div id="beVisitSummary">
+
+                </div>
+                @Html.Partial("_StepsNav", Model)
+                <div id="beVisitSubmit">
+                    <button type="button" class="btn btn-success btn-lg">Review &amp; Submit</button>
+                </div>
+            </div>
+
+            <div class="col-md-10">
+                <div id="workArea">
+                    <div class="well well-sm be-clientHeader">
+                        @Model.CurrStep.Name
+                        <button type="button" class="btn btn-success btn-xs pull-right beSaveAndContinue">Save &amp; Continue<span class="glyphicon glyphicon-play"></span></button>
+                    </div>
+                    @RenderBody()
+                    <div>
+                        <hr />
+                        <button type="button" class="btn btn-success btn-xs pull-right beSaveAndContinue">Save &amp; Continue<span class="glyphicon glyphicon-play"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
@@ -38,5 +65,49 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+    $(function () {
+        ///////////////////////////////
+        // User clicked Nav Button
+        //
+        $(".beStepBtn").click(function () {
+            var view = $(this).data("view");
+            var newHref = "@Url.Action("Navigate", "Home", new { area = "" })" + "?page=" + view;
+            location.href = newHref;
+        });
+        ///////////////////////////////
+        // User clicked Save & Continue
+        //
+        $(".beSaveAndContinue").click(function () {
+            var state = $("#CurrStep_State").val();
+
+            @*if (state == 0)// @StepState.None.ToString()
+            {
+                alert("No data present"); //
+            }
+            else if (state == 1)// @StepState.Complete.ToString()
+            {
+                alert("No changes detected"); //
+            }
+            else if (state == 2)// @StepState.Errors.ToString()
+            {
+                alert("Must correct Errors before Saving"); //
+            }
+            else if (state == 3)// @StepState.Modified.ToString()
+            {*@
+                $("#CurrStep_View").val("@Model.CurrStep.View")
+                $("#CurrStep_State").val(state)
+                $("form").submit();
+            //}
+        });
+        ////////////////////////////////////////////////
+        // This #CurrStep_State is purely for developing
+        //
+        $("#CurrStep_State").change(function () {
+            var val = $(this).val();
+            console.log("@Model.CurrStep.View changed. value=" + val)
+        });
+    });
+    </script>
 </body>
 </html>

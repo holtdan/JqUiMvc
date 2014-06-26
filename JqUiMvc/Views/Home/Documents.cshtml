@@ -1,0 +1,9 @@
+﻿@model JqUiMvc.Models.TaskViewModel
+@{
+    ViewBag.Title = Model.CurrStep.Name;
+}
+
+@using (Html.BeginForm("SaveAndContinue", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
+{
+    @Html.Partial("_TaskStepNavControls", Model)
+}

@@ -1,19 +1,36 @@
-﻿@model IEnumerable<JqUiMvc.Models.TaskStep>
+﻿@using JqUiMvc.Models
+@model TaskViewModel
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Book Briefing</h3>
-    </div>
-    <div class="panel-body">
-        <div class="btn-group-vertical">
-            @foreach ( var s in Model.OrderBy(i=>i.Sequence) )
-            {
-                <button type="button" class="btn btn-default">@s.Name</button>
-            }
-        </div>
-    </div>
-    <div class="panel-footer">
-        Panel footer
-    </div>
+<div class="btn-group-vertical">
+
+    @{
+        foreach (var s in Model.Steps.OrderBy(i => i.Sequence).Where(i=>!i.Hidden))
+        {
+            var disabled = s.Sequence == 0 || Model.HasDatabaseCore ? "" : "disabled=\"disabled\"";
+
+            <button type="button" class="btn btn-default beStepBtn" @disabled data-view="@s.View">
+                @s.Name
+
+                @*Which image to display - if any*@
+
+                @*if (s.State == StepState.None)
+                {
+                <span class="glyphicon glyphicon-play pull-right"></span>
+                }
+                else*@ 
+                @if (s.State == StepState.Complete)
+                {
+                <span class="glyphicon glyphicon-ok pull-right"></span>
+                }
+                else if (s.State == StepState.Errors)
+                {
+                <span class="glyphicon glyphicon-ban-circle pull-right"></span>
+                }
+                else if (s.State == StepState.Modified)
+                {
+                <span class="glyphicon glyphicon-edit pull-right"></span>
+                }
+            </button>
+        }
+    }
 </div>
-

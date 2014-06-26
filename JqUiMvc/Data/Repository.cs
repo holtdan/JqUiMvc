@@ -11,9 +11,14 @@ namespace JqUiMvc.Data
         public static IEnumerable<TaskStep> GetSteps()
         {
             return new TaskStep[]{
-                new TaskStep{Sequence=0,Name="Get Initial Data"},
-                new TaskStep{Sequence=1,Name="And Then..."},
-                new TaskStep{Sequence=2,Name="Finally"},
+                new TaskStep{Sequence=0,Name="Info",View="VisitInfo"},
+                new TaskStep{Sequence=1,Name="Owner",View="Owner"},
+                new TaskStep{Sequence=2,Name="Customers",View="Customers"},
+                new TaskStep{Sequence=3,Name="Opportunities",View="Opportunities"},
+                new TaskStep{Sequence=4,Name="Attendees",View="Attendees"},
+                new TaskStep{Sequence=5,Name="Reason",View="Reason"},
+                new TaskStep{Sequence=6,Name="Logistics",View="Logistics"},
+                new TaskStep{Sequence=7,Name="Documents",View="Documents"},
             };
         }
 

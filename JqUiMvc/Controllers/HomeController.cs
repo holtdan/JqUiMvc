@@ -12,23 +12,28 @@ namespace JqUiMvc.Controllers
     {
         public ActionResult Index()
         {
-            var vm = new TaskViewModel();
-            vm.Steps = Repository.GetSteps();
-            return View(vm);
+            return View("VisitInfo",new TaskViewModel());
         }
 
-        public ActionResult About()
+        public ActionResult Navigate(string page)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return View(page,new TaskViewModel(page));
         }
-
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult SaveAndContinue(TaskViewModel vm)
         {
-            ViewBag.Message = "Your contact page.";
+            var newVM = new TaskViewModel(vm.CurrStep.View);
 
-            return View();
+            // Save the Data!
+            ViewBag.Message = "Your visit information was saved.";
+
+            if (vm.CurrStep.Sequence == 0)
+            {
+                newVM.HasDatabaseCore = true;
+            }
+            newVM.GoToNextStep();
+
+            return View(newVM.CurrStep.View,newVM);
         }
     }
 }
