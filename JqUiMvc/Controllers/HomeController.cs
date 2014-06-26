@@ -17,18 +17,24 @@ namespace JqUiMvc.Controllers
 
         public ActionResult Navigate(string page)
         {
-            return View(page,new TaskViewModel(page));
+            var vm = new TaskViewModel(page);
+
+            return View(page,vm);
         }
         [HttpPost]
         public ActionResult SaveAndContinue(TaskViewModel vm)
         {
-            var newVM = new TaskViewModel(vm.CurrStep.View);
-
             // Save the Data!
             ViewBag.Message = "Your visit information was saved.";
 
-            if (vm.CurrStep.Sequence == 0)
+            Repository.Dbs[vm.CurrStep.View] = StepState.Complete;
+
+            var newVM = new TaskViewModel(vm.CurrStep.View);
+
+            if (vm.CurrStep.Sequence == 0 && !newVM.HasDatabaseCore)
             {
+                Repository.ID = DateTime.Now.Second;
+
                 newVM.HasDatabaseCore = true;
             }
             newVM.GoToNextStep();

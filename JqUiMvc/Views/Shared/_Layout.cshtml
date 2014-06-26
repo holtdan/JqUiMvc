@@ -81,7 +81,7 @@
         $(".beSaveAndContinue").click(function () {
             var state = $("#CurrStep_State").val();
 
-            @*if (state == 0)// @StepState.None.ToString()
+            if (state == 0)// @StepState.None.ToString()
             {
                 alert("No data present"); //
             }
@@ -94,11 +94,11 @@
                 alert("Must correct Errors before Saving"); //
             }
             else if (state == 3)// @StepState.Modified.ToString()
-            {*@
+            {
                 $("#CurrStep_View").val("@Model.CurrStep.View")
                 $("#CurrStep_State").val(state)
                 $("form").submit();
-            //}
+            }
         });
         ////////////////////////////////////////////////
         // This #CurrStep_State is purely for developing

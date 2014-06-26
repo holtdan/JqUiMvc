@@ -5,11 +5,11 @@
 
 @using (Html.BeginForm("SaveAndContinue", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
 {
-    @Html.Partial("_TaskStepNavControls", Model, new ViewDataDictionary
+    @Html.Partial("_TaskStepNavControls", Model)@*, new ViewDataDictionary
         {
             TemplateInfo = new System.Web.Mvc.TemplateInfo
             {
                 HtmlFieldPrefix = "CurrStep"
             }
-        })
+        })*@
 }
