@@ -1,8 +1,8 @@
 ﻿@model JqUiMvc.Models.TaskViewModel
 
-@Html.HiddenFor(m=>m.HasDatabaseCore)
-@Html.HiddenFor(m=>m.CanSubmit)
+@*@Html.HiddenFor(m=>m.HasDatabaseCore)
+@Html.HiddenFor(m=>m.CanSubmit)*@
 @Html.HiddenFor(m => m.CurrStep.View)
 
 @*For dev&Test*@
-@Html.EnumDropDownListFor(m => m.CurrStep.State, new { @class = "form-control" })
+@*@Html.EnumDropDownListFor(m => m.CurrStepState, new { @class = "form-control" })*@

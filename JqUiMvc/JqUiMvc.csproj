@@ -204,6 +204,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Home\Customers.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -221,13 +222,12 @@
     <Content Include="Views\Shared\_Sortables.cshtml" />
     <Content Include="Views\Home\VisitInfo.cshtml" />
     <Content Include="Views\Home\Owner.cshtml" />
-    <Content Include="Views\Home\Customers.cshtml" />
     <Content Include="Views\Home\Opportunities.cshtml" />
     <Content Include="Views\Home\Attendees.cshtml" />
     <Content Include="Views\Home\Reason.cshtml" />
     <Content Include="Views\Home\Logistics.cshtml" />
     <Content Include="Views\Home\Documents.cshtml" />
-    <Content Include="Views\Shared\_TaskStepNavControls.cshtml" />
+    <Content Include="Views\Shared\_VisitSummaryBlock.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

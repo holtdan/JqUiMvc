@@ -10,7 +10,7 @@ namespace JqUiMvc.Data
     {
         public static int? ID;
         public static Dictionary<string, StepState> Dbs = new Dictionary<string, StepState>();
-        public static bool HasDatabaseCore { get { return ID != null; } }
+        //public static bool HasDatabaseCore { get { return ID != null; } }
 
         public static IEnumerable<TaskStep> GetSteps()
         {
@@ -33,7 +33,15 @@ namespace JqUiMvc.Data
 
             return steps;
         }
+        public static string GetNextView(string afterThis1)
+        {
+            var steps = GetSteps();
 
+            var currSeqNum = steps.Where(s=>s.View == afterThis1).Single().Sequence;
+            var nextSeq = steps.Where(s => !s.Hidden && s.Sequence > currSeqNum).OrderBy(s => s.Sequence).FirstOrDefault();
+
+            return (nextSeq == null) ? steps.First().View : nextSeq.View;
+        }
         public void Dispose()
         {
         }

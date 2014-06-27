@@ -23,18 +23,24 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("BE", "Index", "Home")</li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User.Identity.GetUserName()<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Edit Profile</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul> <!--navbar-right-->
             </div>
         </div>
     </div>
     <div class="container body-content">
         <div class="row">
             <div class="col-md-2" id="steps">
-                <div id="beVisitSummary">
-
-                </div>
                 @Html.Partial("_StepsNav", Model)
                 <div id="beVisitSubmit">
                     <button type="button" class="btn btn-success btn-lg">Review &amp; Submit</button>
@@ -46,6 +52,7 @@
                     <div class="well well-sm be-clientHeader">
                         @Model.CurrStep.Name
                         <button type="button" class="btn btn-success btn-xs pull-right beSaveAndContinue">Save &amp; Continue<span class="glyphicon glyphicon-play"></span></button>
+                        <span id="beViewHeaderMessage" class="pull-right"></span> 
                     </div>
                     @RenderBody()
                     <div>
@@ -66,14 +73,33 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
-    $(function () {
+        $(function () {
+            var visSumm = "none";
+
+            if ( "@Model.HasDatabaseCore" == "True" )
+                visSumm = "block";
+
+            $("#beVisitSummary").css("display", visSumm );
+
         ///////////////////////////////
         // User clicked Nav Button
         //
-        $(".beStepBtn").click(function () {
-            var view = $(this).data("view");
-            var newHref = "@Url.Action("Navigate", "Home", new { area = "" })" + "?page=" + view;
-            location.href = newHref;
+            $(".beStepBtn").click(function () {
+                var view = $(this).data("view");
+                var state = $("#CurrStep_State").val();
+
+                if (state == 2)// @StepState.Errors.ToString()
+                {
+                    alert("Must correct Errors before Saving"); //
+                }
+                else if (state == 3)// @StepState.Modified.ToString()
+                {
+                    alert("Must Save before going to " + view); //
+                }
+                else {
+                    var newHref = "@Url.Action("Navigate", "Home", new { area = "" })" + "?view=" + view;
+                    location.href = newHref;
+                }
         });
         ///////////////////////////////
         // User clicked Save & Continue
@@ -106,6 +132,21 @@
         $("#CurrStep_State").change(function () {
             var val = $(this).val();
             console.log("@Model.CurrStep.View changed. value=" + val)
+            //TODO: Update Step icon
+            $.ajax({
+                url: "@Url.Action("UpdateViewData", "Home")",
+                type: 'POST',
+            dataType: "json",
+            data: { view:"@Model.CurrStep.View", state: val },
+                success: function (d) {
+                    $("#beViewHeaderMessage").text(d.message);
+                    console.log(d);
+            },
+            error: function errorFunc(data) {
+                alert('error' + data.status);
+            }
+        });
+
         });
     });
     </script>

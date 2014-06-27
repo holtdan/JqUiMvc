@@ -7,12 +7,6 @@ namespace JqUiMvc.Models
 {
     public class StepViewModel
     {
-        public string MyProperty { get; set; }
-
-        public TaskStep StepInfo { get; set; }
-        public StepViewModel(TaskStep step)
-        {
-            StepInfo = step;
-        }
+        public StepState State { get; set; }
     }
 }

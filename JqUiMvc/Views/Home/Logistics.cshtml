@@ -5,5 +5,6 @@
 
 @using (Html.BeginForm("SaveAndContinue", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
 {
-    @Html.Partial("_TaskStepNavControls", Model)
+    @Html.HiddenFor(m => m.CurrStep.View)
+    @Html.EnumDropDownListFor(m => m.CurrStep.State, new { @class = "form-control" })
 }

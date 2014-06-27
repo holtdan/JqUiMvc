@@ -4,33 +4,41 @@
 <div class="btn-group-vertical">
 
     @{
-        foreach (var s in Model.Steps.OrderBy(i => i.Sequence).Where(i=>!i.Hidden))
+    foreach (var s in ViewBag.TaskSteps)
+    {
+        if (s.Hidden)
         {
-            var disabled = s.Sequence == 0 || Model.HasDatabaseCore ? "" : "disabled=\"disabled\"";
+            continue;
+        }
+        
+        var disabled = s.Sequence == 0 || Model.HasDatabaseCore ? "" : "disabled=\"disabled\"";
+        var active = s.View == Model.CurrStep.View ? "active" : "";
 
-            <button type="button" class="btn btn-default beStepBtn" @disabled data-view="@s.View">
+        <button type="button" class="btn btn-default beStepBtn @active" @disabled data-view="@s.View">
+            @if (s.Sequence == 0 && Model.HasDatabaseCore)
+            {
+                @Html.Partial("_VisitSummaryBlock", Model)
+            }
+            else
+            {
                 @s.Name
 
                 @*Which image to display - if any*@
 
-                @*if (s.State == StepState.None)
+                if (s.State == StepState.Complete)
                 {
-                <span class="glyphicon glyphicon-play pull-right"></span>
-                }
-                else*@ 
-                @if (s.State == StepState.Complete)
-                {
-                <span class="glyphicon glyphicon-ok pull-right"></span>
+                    <span class="glyphicon glyphicon-ok pull-right"></span>
                 }
                 else if (s.State == StepState.Errors)
                 {
-                <span class="glyphicon glyphicon-ban-circle pull-right"></span>
+                    <span class="glyphicon glyphicon-ban-circle pull-right"></span>
                 }
                 else if (s.State == StepState.Modified)
                 {
-                <span class="glyphicon glyphicon-edit pull-right"></span>
+                    <span class="glyphicon glyphicon-edit pull-right"></span>
                 }
-            </button>
-        }
+            }
+        </button>
     }
+}
 </div>
