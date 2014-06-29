@@ -73,6 +73,9 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
+
+        //var currView = "@ViewBag.CurrView"; // Make this fact easily accessible
+
         $(function () {
             var visSumm = "none";
 
@@ -121,9 +124,25 @@
             }
             else if (state == 3)// @StepState.Modified.ToString()
             {
-                $("#CurrStep_View").val("@Model.CurrStep.View")
+                //var newHref = "@Url.Action("SaveAndContinue", "Home", new { area = "" })" + "?view=@ViewBag.CurrView&state=" + state;
+                //location.href = newHref;
+
+                $.ajax({
+                    url: "@Url.Action("SaveAndContinue", "Home", new { area = "" })",
+                    type: 'POST',
+                    data: { CurrView: "@ViewBag.CurrView", State: state },
+                    dataType: 'json',
+                    success: function (data) {
+                        location.href = data.url + "?view=" + data.view;
+                    },
+                    error: function errorFunc(data) {
+                        alert('error' + data.status);
+                    }
+                }); 
+
+                @*$("#CurrStep_View").val("@Model.CurrStep.View")
                 $("#CurrStep_State").val(state)
-                $("form").submit();
+                $("form").submit();*@
             }
         });
         ////////////////////////////////////////////////

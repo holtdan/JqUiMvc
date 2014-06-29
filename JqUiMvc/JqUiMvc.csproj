@@ -119,9 +119,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SaveAndContinueParam.cs" />
     <Compile Include="Models\StepViewModel.cs" />
     <Compile Include="Models\TaskStep.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
+    <Compile Include="Models\VisitInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

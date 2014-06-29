@@ -12,27 +12,21 @@ namespace JqUiMvc.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.TaskSteps = Repository.GetSteps();
+            var vm = new TaskViewModel();
 
             Repository.Dbs.Clear();
 
-            return View("VisitInfo",new TaskViewModel());
-        }
-        [HttpPost]
-        public ActionResult Index(TaskViewModel vm)
-        {
             ViewBag.TaskSteps = Repository.GetSteps();
+            ViewBag.CurrView = vm.CurrStep.View;
 
-            return View(vm.CurrStep.View, new TaskViewModel());
+            return View("VisitInfo",vm);
         }
         public ActionResult Navigate(string view)
         {
-            if ( view == null)
-                view = TempData["nextView"] as string;
-
             var vm = new TaskViewModel(view);
 
             ViewBag.TaskSteps = Repository.GetSteps();
+            ViewBag.CurrView = vm.CurrStep.View;
 
             return View(view,vm);
         }
@@ -49,13 +43,18 @@ namespace JqUiMvc.Controllers
             });
         }
         [HttpPost]
-        public ActionResult SaveAndContinue(TaskViewModel vm)
+        //public ActionResult SaveAndContinue(TaskViewModel vm)
+        //public ActionResult SaveAndContinue(string view, int? state)
+        public ActionResult SaveAndContinue(SaveAndContinueParam sacP)
         {
-            var view = vm.CurrStep.View;
+            // if sacP.State != modified: return error/warning 
 
-            Repository.Dbs[view] = StepState.Complete;
-            
-            return RedirectToAction("Navigate", new { view = Repository.GetNextView(view) });
+            Repository.Dbs[sacP.CurrView] = StepState.Complete;
+
+            var gotoV = Repository.GetNextView(sacP.CurrView);
+
+            //return RedirectToAction("Navigate", new { view = Repository.GetNextView(sacP.CurrView) });
+            return Json(new { result = "Redirect", url = Url.Action("Navigate", "Home", new { area = "" }), view = gotoV });
         }
     }
 }
