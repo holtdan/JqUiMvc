@@ -18,6 +18,7 @@ namespace JqUiMvc.Controllers
 
             ViewBag.TaskSteps = Repository.GetSteps();
             ViewBag.CurrView = vm.CurrStep.View;
+            ViewBag.TaskTitle = "New Request";
 
             return View("VisitInfo",vm);
         }
@@ -27,6 +28,7 @@ namespace JqUiMvc.Controllers
 
             ViewBag.TaskSteps = Repository.GetSteps();
             ViewBag.CurrView = vm.CurrStep.View;
+            ViewBag.TaskTitle = vm.HasDatabaseCore ? "Visit Name!" : "New Request";
 
             return View(view,vm);
         }
@@ -43,15 +45,29 @@ namespace JqUiMvc.Controllers
             });
         }
         [HttpPost]
-        //public ActionResult SaveAndContinue(TaskViewModel vm)
-        //public ActionResult SaveAndContinue(string view, int? state)
         public ActionResult SaveAndContinue(SaveAndContinueParam sacP)
         {
             // if sacP.State != modified: return error/warning 
 
             Repository.Dbs[sacP.CurrView] = StepState.Complete;
 
-            var gotoV = Repository.GetNextView(sacP.CurrView);
+            var gotoV = !string.IsNullOrEmpty(sacP.GoToView)
+                ? sacP.GoToView //TODO: validate
+                : Repository.GetNextView(sacP.CurrView);
+
+            //return RedirectToAction("Navigate", new { view = Repository.GetNextView(sacP.CurrView) });
+            return Json(new { result = "Redirect", url = Url.Action("Navigate", "Home", new { area = "" }), view = gotoV });
+        }
+        [HttpPost]
+        public ActionResult DiscardAndContinue(SaveAndContinueParam sacP)
+        {
+            // if sacP.State != modified: return error/warning 
+
+            Repository.Dbs[sacP.CurrView] = StepState.None; // or could be StepState.Complete
+
+            var gotoV = !string.IsNullOrEmpty(sacP.GoToView)
+                ? sacP.GoToView //TODO: validate
+                : Repository.GetNextView(sacP.CurrView);
 
             //return RedirectToAction("Navigate", new { view = Repository.GetNextView(sacP.CurrView) });
             return Json(new { result = "Redirect", url = Url.Action("Navigate", "Home", new { area = "" }), view = gotoV });

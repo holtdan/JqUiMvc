@@ -18,12 +18,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "navbar-brand" })
+                @Html.ActionLink((string)@ViewBag.TaskTitle, "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("BE", "Index", "Home")</li>
+                    <li>@Html.ActionLink("BE Home", "Index", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -38,13 +37,11 @@
             </div>
         </div>
     </div>
+    
     <div class="container body-content">
         <div class="row">
             <div class="col-md-2" id="steps">
                 @Html.Partial("_StepsNav", Model)
-                <div id="beVisitSubmit">
-                    <button type="button" class="btn btn-success btn-lg">Review &amp; Submit</button>
-                </div>
             </div>
 
             <div class="col-md-10">
@@ -69,104 +66,191 @@
         </footer>
     </div>
 
+    <div id="beDlgSaveContinueErrors">
+        <p>
+            There are errors in the data that must be fixed before the data can be saved.
+        </p>
+    </div>
+    <div id="beDlgNavStepErrors">
+        <p>
+            There are outstanding changes in the data with errors that must be fixed.
+        </p>
+    </div>
+    <div id="beDlgNavStepChanges">
+        <p>
+            There are outstanding changes in the data.
+        </p>
+    </div>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="~/Scripts/BriefingEdge/BeDataSaveDialogs.js"></script>
+
     <script type="text/javascript">
 
         //var currView = "@ViewBag.CurrView"; // Make this fact easily accessible
-
-        $(function () {
-            var visSumm = "none";
-
-            if ( "@Model.HasDatabaseCore" == "True" )
-                visSumm = "block";
-
-            $("#beVisitSummary").css("display", visSumm );
-
-        ///////////////////////////////
-        // User clicked Nav Button
-        //
-            $(".beStepBtn").click(function () {
-                var view = $(this).data("view");
-                var state = $("#CurrStep_State").val();
-
-                if (state == 2)// @StepState.Errors.ToString()
-                {
-                    alert("Must correct Errors before Saving"); //
-                }
-                else if (state == 3)// @StepState.Modified.ToString()
-                {
-                    alert("Must Save before going to " + view); //
-                }
-                else {
-                    var newHref = "@Url.Action("Navigate", "Home", new { area = "" })" + "?view=" + view;
-                    location.href = newHref;
-                }
-        });
-        ///////////////////////////////
-        // User clicked Save & Continue
-        //
-        $(".beSaveAndContinue").click(function () {
-            var state = $("#CurrStep_State").val();
-
-            if (state == 0)// @StepState.None.ToString()
-            {
-                alert("No data present"); //
-            }
-            else if (state == 1)// @StepState.Complete.ToString()
-            {
-                alert("No changes detected"); //
-            }
-            else if (state == 2)// @StepState.Errors.ToString()
-            {
-                alert("Must correct Errors before Saving"); //
-            }
-            else if (state == 3)// @StepState.Modified.ToString()
-            {
-                //var newHref = "@Url.Action("SaveAndContinue", "Home", new { area = "" })" + "?view=@ViewBag.CurrView&state=" + state;
-                //location.href = newHref;
-
-                $.ajax({
-                    url: "@Url.Action("SaveAndContinue", "Home", new { area = "" })",
-                    type: 'POST',
-                    data: { CurrView: "@ViewBag.CurrView", State: state },
-                    dataType: 'json',
-                    success: function (data) {
-                        location.href = data.url + "?view=" + data.view;
-                    },
-                    error: function errorFunc(data) {
-                        alert('error' + data.status);
-                    }
-                }); 
-
-                @*$("#CurrStep_View").val("@Model.CurrStep.View")
-                $("#CurrStep_State").val(state)
-                $("form").submit();*@
-            }
-        });
-        ////////////////////////////////////////////////
-        // This #CurrStep_State is purely for developing
-        //
-        $("#CurrStep_State").change(function () {
-            var val = $(this).val();
-            console.log("@Model.CurrStep.View changed. value=" + val)
-            //TODO: Update Step icon
-            $.ajax({
-                url: "@Url.Action("UpdateViewData", "Home")",
-                type: 'POST',
-            dataType: "json",
-            data: { view:"@Model.CurrStep.View", state: val },
-                success: function (d) {
-                    $("#beViewHeaderMessage").text(d.message);
-                    console.log(d);
+    function CallController(action,nextView) {
+        $.ajax({
+            url: "@Url.Action("SaveAndContinue", "Home", new { area = "" })",
+            type: 'POST',
+            data: { CurrView: "@ViewBag.CurrView", State: state, GoToView: nextView },
+            dataType: 'json',
+            success: function (data) {
+                location.href = data.url + "?view=" + data.view;
             },
             error: function errorFunc(data) {
                 alert('error' + data.status);
             }
         });
+    }
+    $(function () {
+        var visSumm = "none";
 
+        if ( "@Model.HasDatabaseCore" == "True" )
+            visSumm = "block";
+
+        $("#beVisitSummary").css("display", visSumm );
+
+        $.ajaxSetup({
+
+            type: "POST",
+            error: function errorFunc(data) {
+                alert('error' + data.status);
+            }
         });
+
+        ///////////////////////////////
+        // User clicked Nav Button
+        //
+        $(".beStepBtn").click(function () {
+            var view = $(this).data("view");
+            var state = $("#CurrStep_State").val();
+
+            if (state == 2)// @StepState.Errors.ToString()
+            {
+                //$("#beDlgNavStepErrors").dialog("open");
+                //alert("Must correct Errors before Saving"); //
+                beDlgNavStepErrors(function (resp) {
+                    if (resp == "go")
+                    {
+                        $.ajax({
+                            url: "@Url.Action("DiscardAndContinue", "Home", new { area = "" })",
+                            data: { CurrView: "@ViewBag.CurrView", State: state },
+                            success: function (data) {
+                                location.href = data.url + "?view=" + data.view;
+                            }
+                        });
+                    }
+                });
+            }
+            else if (state == 3)// @StepState.Modified.ToString()
+                {
+                    //$("#beDlgNavStepChanges").dialog("open");
+                    //alert("Must Save before going to " + view); //
+                    beDlgNavStepChanges(function (resp) {
+                        if (resp == "go")
+                        {
+                            $.ajax({
+                            url: "@Url.Action("DiscardAndContinue", "Home", new { area = "" })",
+                            data: { CurrView: "@ViewBag.CurrView", State: state },
+                            success: function (data) {
+                                location.href = data.url + "?view=" + data.view;
+                                }
+                            });
+                        }
+                        else if (resp == "save")
+                        {
+                            $.ajax({
+                                url: "@Url.Action("SaveAndContinue", "Home", new { area = "" })",
+                        data: { CurrView: "@ViewBag.CurrView", State: state, GoToView: view },
+                        success: function (data) {
+                            location.href = data.url + "?view=" + data.view;
+                        }
+                    });
+                }
+            });
+        }
+        else {
+                var newHref = "@Url.Action("Navigate", "Home", new { area = "" })" + "?view=" + view;
+        location.href = newHref;
+    }
+    });
+    ///////////////////////////////
+    // User clicked Save & Continue
+    //
+    $(".beSaveAndContinue").click(function () {
+        var state = $("#CurrStep_State").val();
+
+        if (state == 0)// @StepState.None.ToString()
+        {
+            //alert("No data present"); //
+            $.ajax({
+                url: "@Url.Action("DiscardAndContinue", "Home", new { area = "" })",
+                data: { CurrView: "@ViewBag.CurrView", State: state },
+                success: function (data) {
+                    location.href = data.url + "?view=" + data.view;
+                }
+            });
+        }
+        else if (state == 1)// @StepState.Complete.ToString()
+        {
+            //alert("No changes detected"); //
+            $.ajax({
+                url: "@Url.Action("DiscardAndContinue", "Home", new { area = "" })",
+                data: { CurrView: "@ViewBag.CurrView", State: state },
+                success: function (data) {
+                    location.href = data.url + "?view=" + data.view;
+                }
+            });
+        }
+        else if (state == 2)// @StepState.Errors.ToString()
+        {
+            beDlgSaveAndContinueErrors(function (resp) {
+                if (resp == "go")
+                {
+                    $.ajax({
+                        url: "@Url.Action("DiscardAndContinue", "Home", new { area = "" })",
+                        data: { CurrView: "@ViewBag.CurrView", State: state },
+                        success: function (data) {
+                            location.href = data.url + "?view=" + data.view;
+                        }
+                    });
+                }
+            });
+        }
+        else if (state == 3)// @StepState.Modified.ToString()
+        {
+            $.ajax({
+                url: "@Url.Action("SaveAndContinue", "Home", new { area = "" })",
+                data: { CurrView: "@ViewBag.CurrView", State: state },
+                success: function (data) {
+                    location.href = data.url + "?view=" + data.view;
+                }
+            });
+        }
+    });
+    ////////////////////////////////////////////////
+    // This #CurrStep_State is purely for developing
+    //
+    $("#CurrStep_State").change(function () {
+        var val = $(this).val();
+        console.log("@Model.CurrStep.View changed. value=" + val)
+        //TODO: Update Step icon
+        $.ajax({
+            url: "@Url.Action("UpdateViewData", "Home")",
+            type: 'POST',
+            dataType: "json",
+            data: { view:"@Model.CurrStep.View", state: val },
+            success: function (d) {
+                $("#beViewHeaderMessage").text(d.message);
+                console.log(d);
+            },
+            error: function errorFunc(data) {
+                alert('error' + data.status);
+            }
+        });
+    });
     });
     </script>
 </body>

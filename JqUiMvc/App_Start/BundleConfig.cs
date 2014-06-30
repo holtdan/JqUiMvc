@@ -22,7 +22,7 @@ namespace JqUiMvc
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/themes/base/jquery-ui.base.css",
+                      "~/Content/themes/base/jquery.ui.all.css",
                       "~/Content/site.css"));
         }
     }
