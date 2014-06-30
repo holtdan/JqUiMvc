@@ -10,6 +10,9 @@ namespace JqUiMvc.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Start up.
+        /// </summary>
         public ActionResult Index()
         {
             var vm = new TaskViewModel();
@@ -17,21 +20,32 @@ namespace JqUiMvc.Controllers
             Repository.Dbs.Clear();
 
             ViewBag.TaskSteps = Repository.GetSteps();
-            ViewBag.CurrView = vm.CurrStep.View;
             ViewBag.TaskTitle = "New Request";
+            ViewBag.TaskViewModel = vm;
 
             return View("VisitInfo",vm);
         }
+        /// <summary>
+        /// Go to a particular view.
+        /// The controller doesn't care about the state of the on-screen data at this point. 
+        /// It's assumed navigating away is OK because the caller says it is.
+        /// </summary>
         public ActionResult Navigate(string view)
         {
             var vm = new TaskViewModel(view);
 
             ViewBag.TaskSteps = Repository.GetSteps();
-            ViewBag.CurrView = vm.CurrStep.View;
             ViewBag.TaskTitle = vm.HasDatabaseCore ? "Visit Name!" : "New Request";
+            ViewBag.TaskViewModel = vm;
 
             return View(view,vm);
         }
+        /// <summary>
+        /// So far, this is just for development. This will no doubt get bigger and more complicated.
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult UpdateViewData(string view, int state)
         {
@@ -44,6 +58,11 @@ namespace JqUiMvc.Controllers
                 message = string.Format("{0} updated to {1}.", view, stepState)
             });
         }
+        /// <summary>
+        /// Called when user is saving changes and moving on to other step.
+        /// If the GoToView field is null in the param class, the next available
+        /// view is called up.
+        /// </summary>
         [HttpPost]
         public ActionResult SaveAndContinue(SaveAndContinueParam sacP)
         {
@@ -58,6 +77,10 @@ namespace JqUiMvc.Controllers
             //return RedirectToAction("Navigate", new { view = Repository.GetNextView(sacP.CurrView) });
             return Json(new { result = "Redirect", url = Url.Action("Navigate", "Home", new { area = "" }), view = gotoV });
         }
+        /// <summary>
+        /// Used when user has made changes but chooses to navigate away and lose those changes.
+        /// This _might_ not be necessary: simply calling Navigate might be OK. We'll see when it gets real-er.
+        /// </summary>
         [HttpPost]
         public ActionResult DiscardAndContinue(SaveAndContinueParam sacP)
         {

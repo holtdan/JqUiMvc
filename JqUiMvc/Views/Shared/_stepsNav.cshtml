@@ -11,12 +11,12 @@
             continue;
         }
 
-        var btnClass = (s.Sequence == 0 && Model.HasDatabaseCore) ? "btn-primary" : "btn-default";
-        var disabled = s.Sequence == 0 || Model.HasDatabaseCore ? "" : "disabled=\"disabled\"";
-        var active = s.View == Model.CurrStep.View ? "active" : "";
+        var btnClass = (s.Sequence == 0 && ViewBag.TaskViewModel.HasDatabaseCore) ? "btn-primary" : "btn-default";
+        var disabled = s.Sequence == 0 || ViewBag.TaskViewModel.HasDatabaseCore ? "" : "disabled=\"disabled\"";
+        var active = s.View == ViewBag.TaskViewModel.CurrStep.View ? "active" : "";
 
         <button type="button" class="btn @btnClass beStepBtn @active" @disabled data-view="@s.View">
-            @if (s.Sequence == 0 && Model.HasDatabaseCore)
+            @if (s.Sequence == 0 && ViewBag.TaskViewModel.HasDatabaseCore)
             {
                 @Html.Partial("_VisitSummaryBlock", Model)
             }
