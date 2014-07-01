@@ -1,5 +1,5 @@
 ﻿@using JqUiMvc.Models
-@model TaskViewModel
+@model VisitViewModelBase
 <!DOCTYPE html>
 <html>
 <head>
@@ -112,7 +112,7 @@
         //
         $(".beStepBtn").click(function () {
             var view = $(this).data("view");
-            var state = $("#CurrStep_State").val();
+            var state = $("#StepState").val();
 
             if (state == 2)// @StepState.Errors.ToString()
             {
@@ -123,7 +123,7 @@
                     {
                         $.ajax({
                             url: "@Url.Action("DiscardAndContinue", "Home", new { area = "" })",
-                            data: { CurrView: "@ViewBag.TaskViewModel.CurrStep.View", State: state },
+                            data: { CurrView: "@ViewBag.TaskViewModel.CurrStep.View", State: state, GoToView: view },
                             success: function (data) {
                                 location.href = data.url + "?view=" + data.view;
                             }
@@ -140,7 +140,7 @@
                         {
                             $.ajax({
                             url: "@Url.Action("DiscardAndContinue", "Home", new { area = "" })",
-                            data: { CurrView: "@ViewBag.TaskViewModel.CurrStep.View", State: state },
+                            data: { CurrView: "@ViewBag.TaskViewModel.CurrStep.View", State: state, GoToView: view },
                             success: function (data) {
                                 location.href = data.url + "?view=" + data.view;
                                 }
@@ -167,7 +167,7 @@
     // User clicked Save & Continue
     //
     $(".beSaveAndContinue").click(function () {
-        var state = $("#CurrStep_State").val();
+        var state = $("#StepState").val();
 
         if (state == 0)// @StepState.None.ToString()
         {
@@ -218,9 +218,9 @@
         }
     });
     ////////////////////////////////////////////////
-    // This #CurrStep_State is purely for developing
+        // This #StepState is purely for developing
     //
-    $("#CurrStep_State").change(function () {
+        $("#StepState").change(function () {
         var val = $(this).val();
         console.log("@ViewBag.TaskViewModel.CurrStep.View changed. value=" + val)
         //TODO: Update Step icon

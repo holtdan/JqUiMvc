@@ -124,6 +124,7 @@
     <Compile Include="Models\TaskStep.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
     <Compile Include="Models\VisitInfoViewModel.cs" />
+    <Compile Include="Models\VisitViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

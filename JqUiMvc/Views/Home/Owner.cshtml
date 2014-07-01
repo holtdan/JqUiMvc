@@ -1,12 +1,9 @@
-﻿@model JqUiMvc.Models.TaskViewModel
+﻿@model JqUiMvc.Models.VisitViewModelBase
 @{
-    ViewBag.Title = Model.CurrStep.Name;
+    ViewBag.Title = ViewBag.TaskViewModel.CurrStep.Name;
 }
 
 @using (Html.BeginForm("SaveAndContinue", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
 {
-    @Html.HiddenFor(m => m.CurrStep.View)
-    @Html.EnumDropDownListFor(m => m.CurrStep.State, new { @class = "form-control" })
-    @:View = @Model.CurrStep.View
-@:State = @Model.CurrStep.State
+    @Html.EnumDropDownListFor(m => m.StepState, new { @class = "form-control" })
 }

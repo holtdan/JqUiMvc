@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace JqUiMvc.Models
 {
-    public class VisitInfoViewModel
+    public class VisitInfoViewModel : VisitViewModelBase
     {
         [HiddenInput(DisplayValue = false)]
         public int VisitID { get; set; }

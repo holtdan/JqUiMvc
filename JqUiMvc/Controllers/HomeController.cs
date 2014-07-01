@@ -23,7 +23,7 @@ namespace JqUiMvc.Controllers
             ViewBag.TaskTitle = "New Request";
             ViewBag.TaskViewModel = vm;
 
-            return View("VisitInfo",vm);
+            return View("VisitInfo", new VisitViewModelBase { StepState = vm.CurrStep.State });
         }
         /// <summary>
         /// Go to a particular view.
@@ -38,7 +38,7 @@ namespace JqUiMvc.Controllers
             ViewBag.TaskTitle = vm.HasDatabaseCore ? "Visit Name!" : "New Request";
             ViewBag.TaskViewModel = vm;
 
-            return View(view,vm);
+            return View(view, new VisitViewModelBase { StepState = vm.CurrStep.State });
         }
         /// <summary>
         /// So far, this is just for development. This will no doubt get bigger and more complicated.
