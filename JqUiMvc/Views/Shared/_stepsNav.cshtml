@@ -18,7 +18,7 @@
             <button type="button" class="btn @btnClass beStepBtn @active" @disabled data-view="@s.View">
                 @if (s.Sequence == 0 && ViewBag.TaskViewModel.HasDatabaseCore)
                 {
-                    @Html.Partial("_VisitSummaryBlock", Model)
+                    @Html.Partial("_VisitSummaryBlock")
                 }
                 else
                 {

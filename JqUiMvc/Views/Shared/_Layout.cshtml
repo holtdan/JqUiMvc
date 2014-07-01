@@ -39,17 +39,17 @@
     </div>
     
     <div class="container body-content">
-        <div class="row">
-            <div class="col-md-2" id="steps">
+        <div class="row row-no-padding">
+            <div class="col-md-2 row-no-padding" id="steps">
                 @Html.Partial("_StepsNav", Model)
             </div>
 
-            <div class="col-md-10">
+            <div class="col-md-10 row-no-padding">
                 <div id="workArea">
                     <div class="well well-sm be-clientHeader">
                         @ViewBag.TaskViewModel.CurrStep.Name
                         <button type="button" class="btn btn-success btn-xs pull-right beSaveAndContinue">Save &amp; Continue<span class="glyphicon glyphicon-play"></span></button>
-                        <span id="beViewHeaderMessage" class="pull-right"></span> 
+                        <span id="beViewHeaderMessage" class="pull-right"></span>
                     </div>
                     @RenderBody()
                     <div>

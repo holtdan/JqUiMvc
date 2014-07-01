@@ -1,9 +1,15 @@
-﻿@model JqUiMvc.Models.VisitViewModelBase
+﻿@model JqUiMvc.Models.VisitInfoViewModel
 @{
     ViewBag.Title = ViewBag.TaskViewModel.CurrStep.Name;
 }
 
 @using (Html.BeginForm("SaveAndContinue", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
 {
+    <div class="form-group" id="customerName">
+        @Html.LabelFor(m => m.VisitName)
+        <span>@Html.ValidationMessageFor(m => m.VisitName)</span>
+        @Html.TextBoxFor(m => m.VisitName, Model.VisitName, new { @class = "form-control focus" })
+    </div>
+
     @Html.EnumDropDownListFor(m => m.StepState, new { @class = "form-control" })
 }

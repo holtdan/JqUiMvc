@@ -17,12 +17,22 @@ namespace JqUiMvc.Controllers
         {
             Repository.Dbs.Clear();
 
-            var vm = new TaskViewModel();
+            var vm = new ScheduleVisitTaskViewModel();
 
             ViewBag.TaskTitle = "New Request";
             ViewBag.TaskViewModel = vm;
 
-            return View("VisitInfo", new VisitViewModelBase { StepState = vm.CurrStep.State });
+            return View("VisitInfo", GetView ( vm.CurrStep ));
+        }
+        VisitViewModelBase GetView(TaskStep step)
+        {
+            switch (step.View)
+            {
+                case "VisitInfo": 
+                    return new VisitInfoViewModel { StepState = step.State, VisitName = "My Name" };
+                default: 
+                    return new VisitViewModelBase() {StepState = step.State};
+            }
         }
         /// <summary>
         /// Go to a particular view.
@@ -31,12 +41,12 @@ namespace JqUiMvc.Controllers
         /// </summary>
         public ActionResult Navigate(string view)
         {
-            var vm = new TaskViewModel(view);
+            var vm = new ScheduleVisitTaskViewModel(view);
 
             ViewBag.TaskTitle = vm.HasDatabaseCore ? "Visit Name!" : "New Request";
             ViewBag.TaskViewModel = vm;
 
-            return View(view, new VisitViewModelBase { StepState = vm.CurrStep.State });
+            return View(view, GetView ( vm.CurrStep ));
         }
         /// <summary>
         /// So far, this is just for development. This will no doubt get bigger and more complicated.
@@ -51,7 +61,8 @@ namespace JqUiMvc.Controllers
 
             Repository.Dbs[view] = stepState;
 
-            return Json(new { 
+            return Json(new
+            {
                 success = true,
                 message = string.Format("{0} updated to {1}.", view, stepState)
             });
@@ -66,7 +77,7 @@ namespace JqUiMvc.Controllers
         {
             // if sacP.State != modified: return error/warning 
 
-            var vm = new TaskViewModel(sacP.CurrView);
+            var vm = new ScheduleVisitTaskViewModel(sacP.CurrView);
 
             Repository.Dbs[sacP.CurrView] = StepState.Complete;
 
@@ -86,7 +97,7 @@ namespace JqUiMvc.Controllers
         {
             // if sacP.State != modified: return error/warning 
 
-            var vm = new TaskViewModel(sacP.CurrView);
+            var vm = new ScheduleVisitTaskViewModel(sacP.CurrView);
 
             Repository.Dbs[sacP.CurrView] = StepState.None; // or could be StepState.Complete
 
