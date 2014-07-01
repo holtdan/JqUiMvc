@@ -4,43 +4,43 @@
 <div class="btn-group-vertical">
 
     @{
-    foreach (var s in ViewBag.TaskSteps)
-    {
-        if (s.Hidden)
+        foreach (var s in ViewBag.TaskViewModel.Steps)
         {
-            continue;
+            if (s.Hidden)
+            {
+                continue;
+            }
+
+            var btnClass = (s.Sequence == 0 && ViewBag.TaskViewModel.HasDatabaseCore) ? "btn-primary" : "btn-default";
+            var disabled = s.Sequence == 0 || ViewBag.TaskViewModel.HasDatabaseCore ? "" : "disabled=\"disabled\"";
+            var active = s.View == ViewBag.TaskViewModel.CurrStep.View ? "active" : "";
+
+            <button type="button" class="btn @btnClass beStepBtn @active" @disabled data-view="@s.View">
+                @if (s.Sequence == 0 && ViewBag.TaskViewModel.HasDatabaseCore)
+                {
+                    @Html.Partial("_VisitSummaryBlock", Model)
+                }
+                else
+                {
+                    @s.Name
+
+                    @*Which image to display - if any*@
+
+                    if (s.State == StepState.Complete)
+                    {
+                        <span class="glyphicon glyphicon-ok pull-right"></span>
+                    }
+                    else if (s.State == StepState.Errors)
+                    {
+                        <span class="glyphicon glyphicon-ban-circle pull-right"></span>
+                    }
+                    else if (s.State == StepState.Modified)
+                    {
+                        <span class="glyphicon glyphicon-edit pull-right"></span>
+                    }
+                }
+            </button>
         }
-
-        var btnClass = (s.Sequence == 0 && ViewBag.TaskViewModel.HasDatabaseCore) ? "btn-primary" : "btn-default";
-        var disabled = s.Sequence == 0 || ViewBag.TaskViewModel.HasDatabaseCore ? "" : "disabled=\"disabled\"";
-        var active = s.View == ViewBag.TaskViewModel.CurrStep.View ? "active" : "";
-
-        <button type="button" class="btn @btnClass beStepBtn @active" @disabled data-view="@s.View">
-            @if (s.Sequence == 0 && ViewBag.TaskViewModel.HasDatabaseCore)
-            {
-                @Html.Partial("_VisitSummaryBlock", Model)
-            }
-            else
-            {
-                @s.Name
-
-                @*Which image to display - if any*@
-
-                if (s.State == StepState.Complete)
-                {
-                    <span class="glyphicon glyphicon-ok pull-right"></span>
-                }
-                else if (s.State == StepState.Errors)
-                {
-                    <span class="glyphicon glyphicon-ban-circle pull-right"></span>
-                }
-                else if (s.State == StepState.Modified)
-                {
-                    <span class="glyphicon glyphicon-edit pull-right"></span>
-                }
-            }
-        </button>
+        <button id="beReviewAndSubmit" type="button" class="btn btn-success" data-view="ReviewSUbmit">Review &amp; Submit</button>
     }
-    <button id="beReviewAndSubmit" type="button" class="btn btn-success" data-view="ReviewSUbmit">Review &amp; Submit</button>
-}
 </div>

@@ -11,11 +11,19 @@ namespace JqUiMvc.Data
         public static int? ID;
         public static Dictionary<string, StepState> Dbs = new Dictionary<string, StepState>();
         //public static bool HasDatabaseCore { get { return ID != null; } }
-
+        public static VisitTypeScheduleConfig GetVisitTypeScheduleConfig()//int id
+        {
+            return new VisitTypeScheduleConfig
+            {
+                VisitTypeID = 22,
+                Name = "Briefing",
+                HideReason = true
+            };
+        }
         public static IEnumerable<TaskStep> GetSteps()
         {
             if (Dbs.Count() == 0)
-                foreach (var s in new string[] {"VisitInfo","Owner","Customers","Opportunities","Attendees","Reason","Logistics","Documents"})
+                foreach (var s in new string[] { "VisitInfo", "Owner", "Customers", "Opportunities", "Attendees", "Reason", "Logistics", "Documents" })
                     Dbs[s] = StepState.None;
 
             var steps = new TaskStep[]{
@@ -32,15 +40,6 @@ namespace JqUiMvc.Data
             foreach (var s in steps) s.State = Dbs[s.View];
 
             return steps;
-        }
-        public static string GetNextView(string afterThis1)
-        {
-            var steps = GetSteps();
-
-            var currSeqNum = steps.Where(s=>s.View == afterThis1).Single().Sequence;
-            var nextSeq = steps.Where(s => !s.Hidden && s.Sequence > currSeqNum).OrderBy(s => s.Sequence).FirstOrDefault();
-
-            return (nextSeq == null) ? steps.First().View : nextSeq.View;
         }
         public void Dispose()
         {
