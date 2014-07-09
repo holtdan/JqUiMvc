@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink((string)@ViewBag.TaskTitle, "Index", "Home", null, new { @class = "navbar-brand" })
+                @Html.ActionLink((string)@ViewBag.VisitInfoViewModel.VisitName, "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -40,12 +40,18 @@
     
     <div class="container body-content">
         <div class="row row-no-padding">
-            <div class="col-md-2 row-no-padding" id="steps">
+            <div class="col-md-2 no-H-padding" id="steps">
                 @Html.Partial("_StepsNav", Model)
             </div>
 
             <div class="col-md-10 row-no-padding">
                 <div id="workArea">
+                    @if (ViewBag.TaskViewModel.HasDatabaseCore)
+                    {
+                        <div id="beVisitSummary">
+                            @Html.Partial("_VisitSummaryBlock")
+                        </div>
+                    }
                     <div class="well well-sm be-clientHeader">
                         @ViewBag.TaskViewModel.CurrStep.Name
                         <button type="button" class="btn btn-success btn-xs pull-right beSaveAndContinue">Save &amp; Continue<span class="glyphicon glyphicon-play"></span></button>
@@ -208,13 +214,14 @@
         }
         else if (state == 3)// @StepState.Modified.ToString()
         {
-            $.ajax({
+            $("form").submit();
+            @*$.ajax({
                 url: "@Url.Action("SaveAndContinue", "Home", new { area = "" })",
                 data: { CurrView: "@ViewBag.TaskViewModel.CurrStep.View", State: state },
                 success: function (data) {
                     location.href = data.url + "?view=" + data.view;
                 }
-            });
+            });*@
         }
     });
     ////////////////////////////////////////////////

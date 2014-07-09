@@ -5,6 +5,9 @@ using System.Web;
 
 namespace JqUiMvc.Data
 {
+    /// <summary>
+    /// Site/VisitType Level Config
+    /// </summary>
     public class SiteVisitTypeScheduleConfig
     {
         public int SiteID { get; set; }
@@ -14,6 +17,9 @@ namespace JqUiMvc.Data
         public bool RequiresMainRoom { get; set; }
 
     }
+    /// <summary>
+    /// VisitType Level Config
+    /// </summary>
     public class VisitTypeScheduleConfig
     {
         public int VisitTypeID { get; set; }

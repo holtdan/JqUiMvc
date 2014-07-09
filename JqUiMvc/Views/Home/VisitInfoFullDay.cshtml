@@ -1,0 +1,34 @@
+﻿@model JqUiMvc.Models.VisitInfoViewModel
+
+@{
+    ViewBag.Title = ViewBag.TaskViewModel.CurrStep.Name;
+}
+
+@using (Html.BeginForm("VisitInfo_When_SAC", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
+{
+    @Html.HiddenFor(model => model.VisitID)
+    @Html.HiddenFor(model => model.SiteID)
+    @Html.HiddenFor(model => model.VisitTypeID)
+    @Html.HiddenFor(model => model.VisitName)
+    @Html.HiddenFor(model => model.IsOffSite)
+    @Html.HiddenFor(model => model.VisitLength)
+    @Html.HiddenFor(model => model.NumAttendees)
+    @Html.HiddenFor(model => model.StartDate)
+    @Html.HiddenFor(model => model.EndDate)
+
+    <p>Select the Visit Date:</p>
+    <div id="datepicker"></div>
+}
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker({
+                onSelect: function (dateText, inst) {
+                    $("#StartDate").val(dateText);
+                    $("#EndDate").val(dateText);
+                    $(this).parent('form').submit();
+                }
+            });
+        });
+    </script>
+}

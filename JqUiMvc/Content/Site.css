@@ -1,14 +1,19 @@
 ﻿#steps{
     background-color: transparent;
+
 }
 #workArea{
     background-color: darkgray;
 }
-.row-no-padding {
+.row-no-paddingXXX {
   [class*="col-"] {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+}
+ .no-H-padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 body {
     padding-top: 70px;

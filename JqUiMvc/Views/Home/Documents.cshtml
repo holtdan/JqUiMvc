@@ -5,5 +5,9 @@
 
 @using (Html.BeginForm("SaveAndContinue", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
 {
-    @Html.EnumDropDownListFor(m => m.StepState, new { @class = "form-control" })
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            @Html.EnumDropDownListFor(m => m.StepState, new { @class = "form-control" })
+        </div>
+    </div>
 }

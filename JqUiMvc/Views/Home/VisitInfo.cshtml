@@ -1,15 +1,98 @@
-﻿@model JqUiMvc.Models.VisitInfoViewModel
+﻿@using JqUiMvc.Models
+@model VisitInfoViewModel
 @{
     ViewBag.Title = ViewBag.TaskViewModel.CurrStep.Name;
 }
 
-@using (Html.BeginForm("SaveAndContinue", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
+@using (Html.BeginForm("VisitInfo_SAC", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
 {
-    <div class="form-group" id="customerName">
-        @Html.LabelFor(m => m.VisitName)
-        <span>@Html.ValidationMessageFor(m => m.VisitName)</span>
-        @Html.TextBoxFor(m => m.VisitName, Model.VisitName, new { @class = "form-control focus" })
+    @Html.HiddenFor(model => model.VisitID)
+    @Html.HiddenFor(model => model.SiteID)
+    @Html.HiddenFor(model => model.VisitTypeID)
+    @Html.HiddenFor(model => model.StartDate)
+    @Html.HiddenFor(model => model.EndDate)
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.EnumDropDownListFor(m => m.StepState, new { @class = "form-control" })
+        </div>
     </div>
 
-    @Html.EnumDropDownListFor(m => m.StepState, new { @class = "form-control" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.VisitName, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.VisitName)
+            @Html.ValidationMessageFor(model => model.VisitName)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SiteID, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.SiteID, Model.SiteSelList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SiteID)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.VisitTypeID, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.VisitTypeID, Model.VisitTypeSelList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.VisitTypeID)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsOffSite, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.RadioButtonFor(model => model.IsOffSite, true, new { @class = "filter", id = "Offsite_true" })
+            <label for="Offsite_true">Yes</label>
+            @Html.RadioButtonFor(model => model.IsOffSite, false, new { @class = "filter", id = "Onsite_true" })
+            <label for="Onsite_true">No</label>
+            @Html.ValidationMessageFor(model => model.IsOffSite)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.VisitLength, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.RadioButtonFor(model => model.VisitLength, VisitInfoViewModel.VLength.Hourly, new { @class = "filter", id = "VisitLength_hourly" })
+            <label for="VisitLength_hourly">Hourly</label>
+            @Html.RadioButtonFor(model => model.VisitLength, VisitInfoViewModel.VLength.Full, new { @class = "filter", id = "VisitLength_full" })
+            <label for="VisitLength_full">Full Day</label>
+            @Html.RadioButtonFor(model => model.VisitLength, VisitInfoViewModel.VLength.Multi, new { @class = "filter", id = "VisitLength_multi" })
+            <label for="VisitLength_multi">Multi-day</label>
+            @Html.ValidationMessageFor(model => model.VisitLength)
+        </div>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(model => model.NumAttendees, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NumAttendees)
+            @Html.ValidationMessageFor(model => model.NumAttendees)
+        </div>
+    </div>
+    
+    if (Model.StartDate != null)
+    {
+        <div class="form-group">
+            <label class="control-label col-md-2">Date</label>
+            <div class="col-md-10">
+                @Model.StartDate.Value.ToShortDateString()&nbsp;-&nbsp;@Model.EndDate.Value.ToShortDateString()
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Time</label>
+            <div class="col-md-10">
+                @Model.StartDate.Value.ToShortTimeString()&nbsp;-&nbsp;@Model.EndDate.Value.ToShortTimeString()
+            </div>
+        </div>
+        @* if ! AcctMgr *@
+        <div class="form-group">
+            <label class="control-label col-md-2">Room(s)</label>
+            <div class="col-md-10">
+            </div>
+        </div>
+    }
 }

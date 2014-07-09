@@ -16,12 +16,7 @@
             var active = s.View == ViewBag.TaskViewModel.CurrStep.View ? "active" : "";
 
             <button type="button" class="btn @btnClass beStepBtn @active" @disabled data-view="@s.View">
-                @if (s.Sequence == 0 && ViewBag.TaskViewModel.HasDatabaseCore)
-                {
-                    @Html.Partial("_VisitSummaryBlock")
-                }
-                else
-                {
+                @{
                     @s.Name
 
                     @*Which image to display - if any*@
@@ -38,7 +33,7 @@
                     {
                         <span class="glyphicon glyphicon-edit pull-right"></span>
                     }
-                }
+            }
             </button>
         }
         <button id="beReviewAndSubmit" type="button" class="btn btn-success" data-view="ReviewSUbmit">Review &amp; Submit</button>

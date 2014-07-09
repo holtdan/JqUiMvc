@@ -8,6 +8,36 @@ namespace JqUiMvc.Data
 {
     public class Repository : IDisposable
     {
+        public static void Reset()
+        {
+            Repository.Dbs.Clear();
+            Repository.VisitModel = null;
+        }
+        public const int DefaultSiteID = 9;
+
+        public static VisitModel VisitModel;
+
+        public static IEnumerable<VisitType> GetVisitTypes(int siteID)
+        {
+            if (siteID == DefaultSiteID)
+                return new VisitType[]{
+                    new VisitType{ID=1,Name="VisType One"},
+                    new VisitType{ID=2,Name="VisType Two"},
+                    new VisitType{ID=3,Name="VisType Three"},
+            };
+            else
+                return new VisitType[]{
+                new VisitType{ID=3,Name="VisType Three"},
+                new VisitType{ID=4,Name="VisType Four"},
+            };
+        }
+        public static IEnumerable<Site> GetSites()
+        {
+            return new Site[]{
+                new Site{ID=8,Name="Site Eight"},
+                new Site{ID=9,Name="Site Nine"},
+            };
+        }
         public static int? ID;
         public static Dictionary<string, StepState> Dbs = new Dictionary<string, StepState>();
         //public static bool HasDatabaseCore { get { return ID != null; } }

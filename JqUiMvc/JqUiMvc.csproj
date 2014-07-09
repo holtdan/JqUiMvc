@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -116,6 +117,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\Repository.cs" />
+    <Compile Include="Data\StandIns.cs" />
+    <Compile Include="Data\VisitModel.cs" />
     <Compile Include="Data\VisitTypeScheduleConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -234,6 +237,9 @@
     <Content Include="Views\Home\Logistics.cshtml" />
     <Content Include="Views\Home\Documents.cshtml" />
     <Content Include="Views\Shared\_VisitSummaryBlock.cshtml" />
+    <Content Include="Views\Home\VisitInfoHourly.cshtml" />
+    <Content Include="Views\Home\VisitInfoFullDay.cshtml" />
+    <Content Include="Views\Home\VisitInfoMultiDay.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
