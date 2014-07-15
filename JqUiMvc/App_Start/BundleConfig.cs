@@ -20,6 +20,10 @@ namespace JqUiMvc
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/briefingedge").Include(
+                      "~/Scripts/BriefingEdge/date.js",
+                      "~/Scripts/BriefingEdge/BeCalendar.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/themes/base/jquery.ui.all.css",

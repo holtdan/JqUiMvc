@@ -116,6 +116,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Data\Repository.cs" />
     <Compile Include="Data\StandIns.cs" />
     <Compile Include="Data\VisitModel.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\BeCalendar.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -201,10 +203,20 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\ArrowIcons\icon_Calendar.png" />
+    <Content Include="images\ArrowIcons\icon_CalendarWithArrow.png" />
+    <Content Include="images\ArrowIcons\icon_LeftArrow.png" />
+    <Content Include="images\ArrowIcons\icon_LeftArrowDouble.png" />
+    <Content Include="images\ArrowIcons\icon_LeftArrowThin.png" />
+    <Content Include="images\ArrowIcons\icon_RightArrow.png" />
+    <Content Include="images\ArrowIcons\icon_RightArrowDouble.png" />
+    <Content Include="images\ArrowIcons\icon_RightArrowThin.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\BriefingEdge\BeCalendar.js" />
     <Content Include="Scripts\BriefingEdge\BeDataSaveDialogs.js" />
+    <Content Include="Scripts\BriefingEdge\date.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
@@ -240,6 +252,8 @@
     <Content Include="Views\Home\VisitInfoHourly.cshtml" />
     <Content Include="Views\Home\VisitInfoFullDay.cshtml" />
     <Content Include="Views\Home\VisitInfoMultiDay.cshtml" />
+    <Content Include="Views\Shared\_LayoutJustScripts.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

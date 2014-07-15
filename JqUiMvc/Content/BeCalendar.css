@@ -1,0 +1,203 @@
+/* CALENDAR STYLES */
+.BECalendar{
+    width:100%;
+    height:100%;
+    background: #ffffff;     /*  #D9D9D9; */
+    
+     
+}
+.CalendarHeader{
+    width:100%;
+    height:10%;
+    
+    text-align: center;
+}
+.CalendarMon{
+    /*width:276px;*/
+    background: #ffffff;     /*  #D9D9D9; */
+    text-align: center;
+    font-size: 18px;
+    height:18px;
+    margin:0 auto;
+}
+.CalendarYear
+{
+    width:100%;
+    background: #ffffff;
+    text-align:center;
+    font-size: 18px;
+    padding-left: 30%;
+    padding-right: 30%;
+}
+.DaysOfWeek
+{
+    padding-top:2%;
+}
+.CalendarDoW{
+    width:20%;
+    margin:0px;
+    padding:0px;
+    float:left;
+    background: #ffffff;     /*  #D9D9D9; */
+    text-align: center;
+}
+.CalendarBody
+{
+    width:100%;
+    text-align: center;
+    height:90%;
+}
+
+.AMPMdate{
+    height:35%;
+    line-height: 18px;
+}
+.calAM,.calPM{
+    width:40%;
+    height:60%;
+    display:inline-block;
+    box-shadow: inset 1px 1px 4px 1px #858F88;
+    opacity: .7;
+    margin-top:0px;
+}
+
+.calrow
+{
+    height:16%;
+}
+.calcell
+{
+    width:20%;
+    float:left;
+    height:100%; 
+    
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;         
+    background: #ABABAB;
+    border-style:solid;
+    border-width:1px;
+    border-color: #858F88;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+.selectabledate{
+    background:#ffffff;  /* #FBFBFB; */
+    border-style:solid;
+    border-width:1px;
+    border-color: #858F88;
+    
+    
+}
+.selectableampm{
+    background:#ffffff;  /* #FBFBFB; */
+    border-style:solid;
+    border-width:1px;
+    border-color: #858F88;
+    box-shadow: inset 1px 1px 1px 1px #858F88;
+
+}
+.selecteddate{
+    border-style:solid;
+    border-width:2px;
+    border-color: #00FF00;
+}
+.selectedampm{
+       border-style:solid;
+    border-width:2px;
+    border-color: #00FF00;
+}
+.CalendarYear div
+{
+    float:left;
+}
+.currYear
+{
+    width: 70%;
+}
+.dblprevarrow:after
+{
+    /*
+        content:'◀◀';
+    text-align: right;
+    */
+}
+.dblprevarrow
+{
+    background-image: url("../images/arrowIcons/icon_LeftArrowDouble.png");
+    background-repeat: no-repeat;
+    background-position: left;
+}
+.dblnextarrow:after
+{
+    /*
+     content:'▶▶';
+    text-align: left;
+    */
+    
+}
+.dblnextarrow{
+    background-image: url("../images/arrowIcons/icon_RightArrowDouble.png");
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.prevarrow:after{
+    /*
+    content:'◀';
+    text-align: right;
+    */
+}
+.prevarrow{
+     background-image: url("../images/arrowIcons/icon_LeftArrow.png");
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.nextarrow:after{
+    /*
+    content:'▶';
+    text-align: left;
+    */
+}
+.nextarrow{
+   background-image: url("../images/arrowIcons/icon_RightArrow.png");
+    background-repeat: no-repeat;
+    background-position: left;
+}
+.prevarrow,.nextarrow,.dblprevarrow,.dblnextarrow{
+    width:24px; 
+    height:100%;
+    background-size: contain;
+}
+.CalendarMon div{
+    float:left;
+}
+.monname{
+    width:180px;
+    
+}
+.CalendarClose{
+    width:100%;
+    
+}
+.CalendarClose span{
+    cursor: pointer;
+    background-color: red;
+    color:white;
+    padding-left: 4px;
+    padding-right:4px;
+    padding-bottom: 4px;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+/*END CALENDAR STYLES*/

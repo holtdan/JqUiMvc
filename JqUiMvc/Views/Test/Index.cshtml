@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutJustScripts.cshtml";
+}
+@section Styles {
+    <link href="@Url.Content("~/Content/BeCalendar.css")" rel="stylesheet" type="text/css" />
+    <style>
+        /* Simple day/date based CE Calendar? Use this*/
+        .be-beCalendarDay {
+            width: 326px;
+            height: 250px;
+        }
+        #beFiller {
+            background-color: azure;
+            width: 100%;
+            height: 100%;
+        }
+        table {
+            width: 100%;
+        }
+        #dowsTable th {
+            align-content: center;
+        }
+        #dowsTable td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        .becDay {
+            min-width: 40px;
+            min-height: 50px;
+            width: 100%;
+            height: 100%;
+        }
+        .selectabledate {
+            border: none;
+            background-color: lightgreen;
+        }
+        .CalendarMon {
+            padding: 0px;
+        }
+        .CalendarBtnXXX {
+            width: 30px;
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
+}
+<h2>Index</h2>
+<div class="row">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <div id="calendar" class="be-beCalendarDayX"></div>
+    </div>
+    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" id="beFiller">
+
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/briefingedge")
+    <script type="text/javascript">
+        $(function () {
+            var BECalendar = new Calendar($("#calendar"), {
+                "sevendays": false,
+                "showhalfdays": false
+            });
+            //
+            // Called when user selects date - store date and room info and refresh
+            //
+            calendarClick = function () {
+                var sel = $(this).data("date");
+                console.log(sel);
+            }
+            BECalendar.dateClick(calendarClick);
+            BECalendar.show("calendar");
+        });
+    </script>
+}
