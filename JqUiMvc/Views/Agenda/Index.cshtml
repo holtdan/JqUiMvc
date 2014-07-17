@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutJustScripts.cshtml";
+}
+@section Styles{
+    <style>
+        .agendaPalette {
+            /*position: relative;*/
+            width: 300px;
+            float: left;
+            /*height: 200px;*/
+            /*display: inline;*/
+        }
+
+        #day1 {
+            width: 200px;
+            height: 100%;
+            min-height: 100px;
+            float: left;
+            /*margin-top: 1em;*/
+            margin-left: 1em;
+            display: inline;
+        }
+            /* style the list to maximize the droppable hitarea */
+            #day1 ol {
+                margin: 0;
+                padding: 0; /*1em 0 1em 3em;*/
+            }
+
+        #button {
+            padding: .5em 1em;
+            text-decoration: none;
+        }
+
+        #effect {
+            position: relative;
+            /*width: 240px;
+        height: 135px;
+        padding: 0.4em;*/
+        }
+    </style>
+}
+<h2>Agenda</h2>
+<div class="container">
+    @*<div class="CCCrow">*@
+    <button id="button" class="ui-state-default ui-corner-all">Show</button>
+    <div class="Xcol-md-12">
+        <div class="agendaPalette ">
+            @*<div id="effect" class="ui-widget-content ui-corner-all">*@
+                <div id="agendaCategories" class="jquiAccordion">
+                    <h2><a href="#">Public Sector MCB</a></h2>
+                    <div>
+                        <ul class="list-group">
+                            <li class="list-group-item">Federal Government Overview</li>
+                            <li class="list-group-item">Lenovo Education Strategy</li>
+                            <li class="list-group-item">Vista / One Note</li>
+                        </ul>
+                    </div>
+                    <h2><a href="#">Corporate Information</a></h2>
+                    <div>
+                        <ul class="list-group">
+                            <li class="list-group-item">''Prepping for Showtime''- How to Get the Most Out of Your Customer Visit</li>
+                            <li class="list-group-item">A Secondlife Virtual Briefing Center</li>
+                            <li class="list-group-item">An Event at Chicago's Museum of Science & Industry</li>
+                        </ul>
+                    </div>
+                    <h2><a href="#">Management Overview</a></h2>
+                    <div>
+                        <ul class="list-group">
+                            <li class="list-group-item">Arrival (15 min)</li>
+                            <li class="list-group-item">Next Steps (10 min)</li>
+                            <li class="list-group-item">Sit-down Lunch (60 min)</li>
+                        </ul>
+                    </div>
+                </div>
+            @*</div>*@
+        </div>
+
+        <div id="day1">
+            <h3 class="ui-widget-header">Day 1</h3>
+            <p class="placeholder">Add your items here</p>
+            <div id="accordion" class="jquiAccordion">
+                <ul>
+                    <li class="placeholder">Add your items here</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    @*</div>*@
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            $(".jquiAccordion").accordion({
+                collapsible: true
+            });
+            $("#button").click(function () {
+                var options = {};
+                $(".agendaPalette").toggle("slide", options, 500);
+            });
+            
+            $("#agendaCategories li").draggable({
+                appendTo: "body",
+                helper: "clone"
+            });
+            $("#day1 ul").droppable({
+                activeClass: "ui-state-default",
+                hoverClass: "ui-state-hover",
+                accept: ":not(.ui-sortable-helper)",
+                drop: function (event, ui) {
+                    $(this).find(".placeholder").remove();
+                    $("<li></li>").text(ui.draggable.text()).appendTo(this);
+                }
+            }).sortable({
+                items: "li:not(.placeholder)",
+                sort: function () {
+                    // gets added unintentionally by droppable interacting with sortable
+                    // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+                    $(this).removeClass("ui-state-default");
+                }
+            });
+            $("#accordion")
+      .accordion({
+          //header: "> div > h3"
+          header: "> div > h3"
+      })
+      .sortable({
+          axis: "y",
+          handle: "h3",
+          stop: function (event, ui) {
+              // IE doesn't register the blur when sorting
+              // so trigger focusout handlers to remove .ui-state-focus
+              ui.item.children("h3").triggerHandler("focusout");
+
+              // Refresh accordion to handle new order
+              $(this).accordion("refresh");
+          }
+      });
+        }); // <-- $(function () {
+    </script>
+}

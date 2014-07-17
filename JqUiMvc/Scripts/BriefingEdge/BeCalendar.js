@@ -195,11 +195,11 @@ Calendar.prototype.setupCalendarTable = function () {
 
     $(".CalendarMon").append(
         '<table><tr>' +
-        '<td width="20%"><div class="CalendarBtn clickable Xdblprevarrow"><span class="glyphicon glyphicon-backward"></span></div></td>' +
-        '<td width="10%" align="right"><div class="CalendarBtn clickable Xprevarrow"><span class="glyphicon glyphicon-chevron-left"></span></div></td>' +
+        '<td width="20%"><div class="CalendarBtn clickable dblprevarrow"></div></td>' +
+        '<td width="10%" align="right"><div class="CalendarBtn clickable prevarrow"></div></td>' +
         '<td width="40%"><div class="monname"></div></td>' +
-        '<td width="10%"><div class="CalendarBtn clickable Xprevarrow"><span class="glyphicon glyphicon-chevron-right"></span></div></td>' +
-        '<td width="20%"><div class="CalendarBtn clickable Xdblnxtarrow pull-right"><span class="glyphicon glyphicon-forward"></span></div></td>' +
+        '<td width="10%"><div class="CalendarBtn clickable prevarrow"></div></td>' +
+        '<td width="20%"><div class="CalendarBtn clickable dblnxtarrow pull-right"></div></td>' +
         '</tr></table>');
     //$(".CalendarMon").append(
     //    '<div class="container container-fluid">' +

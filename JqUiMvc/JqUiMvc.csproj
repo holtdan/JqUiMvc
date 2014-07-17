@@ -115,6 +115,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Data\Repository.cs" />
@@ -254,6 +255,7 @@
     <Content Include="Views\Home\VisitInfoMultiDay.cshtml" />
     <Content Include="Views\Shared\_LayoutJustScripts.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Agenda\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

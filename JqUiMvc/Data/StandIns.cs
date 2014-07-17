@@ -18,4 +18,11 @@ namespace JqUiMvc.Data
     {
 
     }
+    public class AgendaItem : Thing
+    {
+    }
+    public class AgendaCategory : Thing
+    {
+        public IEnumerable<AgendaItem> Items { get; set; }
+    }
 }
