@@ -4,6 +4,10 @@
 }
 @section Styles{
     <style>
+        /* IE has layout issues when sorting (see #5413) */
+        .group {
+            zoom: 1;
+        }
         .agendaPalette {
             /*position: relative;*/
             width: 300px;
@@ -12,7 +16,7 @@
             /*display: inline;*/
         }
 
-        #day1 {
+        .agendaDay {
             width: 200px;
             height: 100%;
             min-height: 100px;
@@ -21,11 +25,11 @@
             margin-left: 1em;
             display: inline;
         }
-            /* style the list to maximize the droppable hitarea */
-            #day1 ol {
-                margin: 0;
-                padding: 0; /*1em 0 1em 3em;*/
-            }
+        /* style the list to maximize the droppable hitarea */
+        #day1 ol {
+            margin: 0;
+            padding: 0; /*1em 0 1em 3em;*/
+        }
 
         #button {
             padding: .5em 1em;
@@ -47,42 +51,57 @@
     <div class="Xcol-md-12">
         <div class="agendaPalette ">
             @*<div id="effect" class="ui-widget-content ui-corner-all">*@
-                <div id="agendaCategories" class="jquiAccordion">
-                    <h2><a href="#">Public Sector MCB</a></h2>
-                    <div>
-                        <ul class="list-group">
-                            <li class="list-group-item">Federal Government Overview</li>
-                            <li class="list-group-item">Lenovo Education Strategy</li>
-                            <li class="list-group-item">Vista / One Note</li>
-                        </ul>
-                    </div>
-                    <h2><a href="#">Corporate Information</a></h2>
-                    <div>
-                        <ul class="list-group">
-                            <li class="list-group-item">''Prepping for Showtime''- How to Get the Most Out of Your Customer Visit</li>
-                            <li class="list-group-item">A Secondlife Virtual Briefing Center</li>
-                            <li class="list-group-item">An Event at Chicago's Museum of Science & Industry</li>
-                        </ul>
-                    </div>
-                    <h2><a href="#">Management Overview</a></h2>
-                    <div>
-                        <ul class="list-group">
-                            <li class="list-group-item">Arrival (15 min)</li>
-                            <li class="list-group-item">Next Steps (10 min)</li>
-                            <li class="list-group-item">Sit-down Lunch (60 min)</li>
-                        </ul>
-                    </div>
+            <div id="agendaCategories">
+                <h2><a href="#">Public Sector MCB</a></h2>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item" data-id="1">Federal Government Overview</li>
+                        <li class="list-group-item" data-id="3">Lenovo Education Strategy</li>
+                        <li class="list-group-item" data-id="5">Vista / One Note</li>
+                    </ul>
                 </div>
+                <h2><a href="#">Corporate Information</a></h2>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item" data-id="2">''Prepping for Showtime''- How to Get the Most Out of Your Customer Visit</li>
+                        <li class="list-group-item" data-id="4">A Secondlife Virtual Briefing Center</li>
+                        <li class="list-group-item" data-id="6">An Event at Chicago's Museum of Science & Industry</li>
+                    </ul>
+                </div>
+                <h2><a href="#">Management Overview</a></h2>
+                <div>
+                    <ul class="list-group">
+                        <li class="list-group-item" data-id="7">Arrival (15 min)</li>
+                        <li class="list-group-item" data-id="8">Next Steps (10 min)</li>
+                        <li class="list-group-item" data-id="9">Sit-down Lunch (60 min)</li>
+                    </ul>
+                </div>
+            </div>
             @*</div>*@
         </div>
 
-        <div id="day1">
+        <div id="day1" class="agendaDay">
             <h3 class="ui-widget-header">Day 1</h3>
             <p class="placeholder">Add your items here</p>
-            <div id="accordion" class="jquiAccordion">
-                <ul>
-                    <li class="placeholder">Add your items here</li>
-                </ul>
+            <div id="accordion1">
+            </div>
+        </div>
+        <div id="day2" class="agendaDay">
+            <h3 class="ui-widget-header">Day 2</h3>
+            <p class="placeholder">Add your items here</p>
+            <div id="testAccord">
+                <div class="group">
+                    <h4>Section 1</h4>
+                    <div>
+                        <p>Mauris mauris ante.</p>
+                    </div>
+                </div>
+                <div class="group">
+                    <h4>Section 2</h4>
+                    <div>
+                        <p>Sed non urna.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -90,52 +109,93 @@
 </div>
 @section Scripts{
     <script>
+        AgendaItem = function (item) {
+            var name = item.text();
+            var droppedID = item.data('id');
+            var ai = $('<div class="group">' +
+                        '<h4>' + name + '</h4>' +
+                        '<p>' + droppedID + '</p>' +
+                      '<div>');
+            //return ai;
+            //var wrapper = $("<div/>", { class: "group" }),
+            //    header = $("<h4/>", { text: ui.draggable.text() }),
+            //    conts = $("<p/>", { text: droppedID });
+            //wrapper.append(conts.after(header)).appendTo(this);
+            //$("<li></li>").text(ui.draggable.text()).appendTo(this);
+            var ret =
+            $('<div/>', { class: 'group' })
+                .append($('<h4/>', { text: name }))
+                .append($('<p/>', { text: droppedID }));
+            return ret;
+            //.appendTo(this);
+            //$('<div class="group"><h4>XXX</h4><p>YYY</p></div>').appendTo(this);
+        }
+
+        function addAgendaItem(item) {
+            var ai = AgendaItem(item);
+            $('#accordion1').append(ai);
+        }
         $(function () {
-            $(".jquiAccordion").accordion({
-                collapsible: true
-            });
             $("#button").click(function () {
                 var options = {};
                 $(".agendaPalette").toggle("slide", options, 500);
             });
-            
+
+            $("#agendaCategories").accordion({
+                collapsible: true
+            });
             $("#agendaCategories li").draggable({
                 appendTo: "body",
                 helper: "clone"
             });
-            $("#day1 ul").droppable({
-                activeClass: "ui-state-default",
+            
+            $("#day1").droppable({
+                //activeClass: "ui-state-default",
                 hoverClass: "ui-state-hover",
                 accept: ":not(.ui-sortable-helper)",
                 drop: function (event, ui) {
                     $(this).find(".placeholder").remove();
-                    $("<li></li>").text(ui.draggable.text()).appendTo(this);
-                }
-            }).sortable({
-                items: "li:not(.placeholder)",
-                sort: function () {
-                    // gets added unintentionally by droppable interacting with sortable
-                    // using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
-                    $(this).removeClass("ui-state-default");
+                    var droppedID = ui.draggable.data('id');
+                    
+                    addAgendaItem(ui.draggable);
+                    //$('#accordion1').accordion("detroy"); // <-- destroy
+                    //$("#accordion1").accordion({
+                    //    collapsible: true,
+                    //    header: 'h4'
+                    //});
+                    $("#accordion1").accordion('refresh');
                 }
             });
-            $("#accordion")
-      .accordion({
-          //header: "> div > h3"
-          header: "> div > h3"
-      })
-      .sortable({
-          axis: "y",
-          handle: "h3",
-          stop: function (event, ui) {
-              // IE doesn't register the blur when sorting
-              // so trigger focusout handlers to remove .ui-state-focus
-              ui.item.children("h3").triggerHandler("focusout");
+            $("#accordion1").accordion({
+                collapsible: true,
+                header: "> div > h4"
+            }).sortable({
+                axis: "y",
+                handle: "h4",
+                stop: function (event, ui) {
+                    // IE doesn't register the blur when sorting
+                    // so trigger focusout handlers to remove .ui-state-focus
+                    ui.item.children("h4").triggerHandler("focusout");
 
-              // Refresh accordion to handle new order
-              $(this).accordion("refresh");
-          }
-      });
+                    // Refresh accordion to handle new order
+                    $(this).accordion("refresh");
+                }
+            });
+            $("#testAccord").accordion({
+                collapsible: true,
+                header: "> div > h4"
+            }).sortable({
+              axis: "y",
+              handle: "h4",
+              stop: function (event, ui) {
+                  // IE doesn't register the blur when sorting
+                  // so trigger focusout handlers to remove .ui-state-focus
+                  ui.item.children("h4").triggerHandler("focusout");
+
+                  // Refresh accordion to handle new order
+                  $(this).accordion("refresh");
+              }
+          });
         }); // <-- $(function () {
     </script>
 }
