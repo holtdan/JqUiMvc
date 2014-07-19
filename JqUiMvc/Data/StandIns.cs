@@ -20,9 +20,23 @@ namespace JqUiMvc.Data
     }
     public class AgendaItem : Thing
     {
+        public int AgendaCategoryID { get; set; }
+        public int DisplayOrder { get; set; }
+        public int Duration { get; set; }
+        public string Notes { get; set; }
+        public bool IsMeal { get; set; }
+        public bool AllowAM { get; set; }
+        public bool IsRefSiteEquipment { get; set; }
     }
     public class AgendaCategory : Thing
     {
+        public int DisplayOrder { get; set; }
+        public string Notes { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsMeal { get; set; }
+        public bool AllowAM { get; set; }
+        public bool IsProductModality { get; set; }
+
         public IEnumerable<AgendaItem> Items { get; set; }
     }
 }

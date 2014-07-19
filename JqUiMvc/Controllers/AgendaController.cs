@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JqUiMvc.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,8 @@ namespace JqUiMvc.Controllers
         // GET: /Agenda/
         public ActionResult Index()
         {
+            ViewBag.AgendaCats = Repository.GetAgendaTopicCategories();
+
             return View();
         }
 	}

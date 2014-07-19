@@ -17,7 +17,7 @@
         }
 
         .agendaDay {
-            width: 200px;
+            width: 400px;
             height: 100%;
             min-height: 100px;
             float: left;
@@ -52,6 +52,18 @@
         <div class="agendaPalette ">
             @*<div id="effect" class="ui-widget-content ui-corner-all">*@
             <div id="agendaCategories">
+                @foreach (var cat in ViewBag.AgendaCats)
+                {
+                    <h2>@cat.Name</h2>
+                    <div>
+                        <ul class="list-group">
+                            @foreach ( var top in cat.Items)
+                            {
+                                <li class="list-group-item" data-id="@top.ID">@top.Name</li>
+                            }
+                        </ul>
+                    </div>
+                }
                 <h2><a href="#">Public Sector MCB</a></h2>
                 <div>
                     <ul class="list-group">
@@ -86,24 +98,6 @@
             <div id="accordion1">
             </div>
         </div>
-        <div id="day2" class="agendaDay">
-            <h3 class="ui-widget-header">Day 2</h3>
-            <p class="placeholder">Add your items here</p>
-            <div id="testAccord">
-                <div class="group">
-                    <h4>Section 1</h4>
-                    <div>
-                        <p>Mauris mauris ante.</p>
-                    </div>
-                </div>
-                <div class="group">
-                    <h4>Section 2</h4>
-                    <div>
-                        <p>Sed non urna.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     @*</div>*@
 </div>
@@ -112,23 +106,11 @@
         AgendaItem = function (item) {
             var name = item.text();
             var droppedID = item.data('id');
-            var ai = $('<div class="group">' +
-                        '<h4>' + name + '</h4>' +
-                        '<p>' + droppedID + '</p>' +
-                      '<div>');
-            //return ai;
-            //var wrapper = $("<div/>", { class: "group" }),
-            //    header = $("<h4/>", { text: ui.draggable.text() }),
-            //    conts = $("<p/>", { text: droppedID });
-            //wrapper.append(conts.after(header)).appendTo(this);
-            //$("<li></li>").text(ui.draggable.text()).appendTo(this);
-            var ret =
-            $('<div/>', { class: 'group' })
-                .append($('<h4/>', { text: name }))
-                .append($('<p/>', { text: droppedID }));
-            return ret;
-            //.appendTo(this);
-            //$('<div class="group"><h4>XXX</h4><p>YYY</p></div>').appendTo(this);
+            var ai =$('<div/>', { class: 'group' })
+                    .append($('<h4/>', { text: name }))
+                    .append($('<p/>', { text: droppedID }));
+
+            return ai;
         }
 
         function addAgendaItem(item) {
