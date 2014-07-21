@@ -30,15 +30,24 @@ namespace JqUiMvc.Controllers
 
             var agIt = new AgendaItem
             {
-                Room = Repository.GetRooms(siteID).First(),
+                Room = Repository.GetRooms().Where(r=>r.SiteID == siteID).First(),
                 Start = Repository.VisitModel.StartDate,
                 End = Repository.VisitModel.EndDate,
             };
 
+            //Repository.VisitModel.Agenda.Items.Add(agIt);
+
             ViewBag.AgendaCats = Repository.GetAgendaTopicCategories();
-            ViewBag.Rooms = Repository.GetRooms(siteID);
+            ViewBag.Rooms = Repository.GetRooms().Where(r => r.SiteID == siteID);
 
             return View();
+        }
+        [HttpGet]
+        public ActionResult GetRoom(int roomID)
+        {
+            var room = Repository.GetRooms().Where(r => r.ID == roomID).Single();
+
+            return PartialView("_AgendaRoom", room);
         }
 	}
 }

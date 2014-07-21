@@ -223,6 +223,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -257,6 +259,7 @@
     <Content Include="Views\Shared\_LayoutJustScripts.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Agenda\Index.cshtml" />
+    <Content Include="Views\Shared\_AgendaRoom.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

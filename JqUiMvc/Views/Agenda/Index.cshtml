@@ -120,9 +120,7 @@
             </div>
             <div class="beAgendaRooms" id="beAgendaRooms">
                 <div class="beAgendaRoom">
-                    <h4 class="ui-widget-header">Room X</h4>
-                    <p class="placeholder">Add your items here</p>
-                    <div id="accordion1"></div>
+                    @Html.Action("GetRoom", new {roomID = 52 })
                 </div>
             </div>
         </div>
@@ -141,20 +139,69 @@
             return ai;
         }
 
-        function addAgendaItem(item) {
+        function addAgendaItem(container,item) {
             var ai = AgendaItem(item);
-            $('#accordion1').append(ai);
+            $(container).append(ai);
+            //$(container).accordion('refresh');
+        }
+
+        function addRoom(roomID)
+        {
+
+        }
+        function roomAdded(responseText, textStatus, jqXHR)
+        {
+            var x = jqXHR;
+
+            //$(jqXHR).droppable({
+            //    //activeClass: "ui-state-default",
+            //    hoverClass: "ui-state-hover",
+            //    accept: ":not(.ui-sortable-helper)",
+            //    drop: function (event, ui) {
+            //        $(this).find(".placeholder").remove();
+            //        var droppedID = ui.draggable.data('id');
+
+            //        addAgendaItem(this, ui.draggable);
+            //        $("#accordion1").accordion('refresh');
+            //    }
+            //});
         }
         $(function () {
             $("#addRoom").click(function () {
-                var accorionId = new Date().getTime();
-                var html =
-                    '<div class="beAgendaRoom">' +
-                    '<h4 class="ui-widget-header">Room X</h4>' +
-                    '<p class="placeholder">Add your items here</p>' +
-                    '<div id="accordion' + accorionId + '"></div>' +
-                '</div>';
-                $(html).appendTo('#beAgendaRooms')
+                var tempDivId = new Date().getTime();
+                var newDiv = $('<div class="beAgendaRoom" id="' + tempDivId + '"></div>');
+                
+                $(newDiv).droppable({
+                    //activeClass: "ui-state-default",
+                    hoverClass: "ui-state-hover",
+                    accept: ":not(.ui-sortable-helper)",
+                    drop: function (event, ui) {
+                        $(this).find(".placeholder").remove();
+                        var droppedID = ui.draggable.data('id');
+
+                        addAgendaItem(this, ui.draggable);
+                        //$("#accordion1").accordion('refresh');
+                        $(this).accordion('refresh');
+                    }
+                }).accordion({
+                    collapsible: true,
+                    header: "> div > h4"
+                }).sortable({
+                    axis: "y",
+                    handle: "h4",
+                    stop: function (event, ui) {
+                        // IE doesn't register the blur when sorting
+                        // so trigger focusout handlers to remove .ui-state-focus
+                        ui.item.children("h4").triggerHandler("focusout");
+
+                        // Refresh accordion to handle new order
+                        $(this).accordion("refresh");
+                    }
+                });
+                $(newDiv).appendTo('#beAgendaRooms');
+                $('#' + tempDivId).load('@(Url.Action("GetRoom", "Agenda", new {roomID = 53 }))', roomAdded);
+
+                //$('#beAgendaRooms').load('@(Url.Action("GetRoom", "Agenda", new {roomID = 53 }))')
             });
             $("#button").click(function () {
                 var options = {};
@@ -176,17 +223,12 @@
                 drop: function (event, ui) {
                     $(this).find(".placeholder").remove();
                     var droppedID = ui.draggable.data('id');
-                    
-                    addAgendaItem(ui.draggable);
-                    //$('#accordion1').accordion("detroy"); // <-- destroy
-                    //$("#accordion1").accordion({
-                    //    collapsible: true,
-                    //    header: 'h4'
-                    //});
+
+                    addAgendaItem(this, ui.draggable);
                     $("#accordion1").accordion('refresh');
                 }
             });
-            $("#accordion1").accordion({
+            $(".beAgendaRoomItems").accordion({
                 collapsible: true,
                 header: "> div > h4"
             }).sortable({
@@ -201,21 +243,6 @@
                     $(this).accordion("refresh");
                 }
             });
-            $("#testAccord").accordion({
-                collapsible: true,
-                header: "> div > h4"
-            }).sortable({
-              axis: "y",
-              handle: "h4",
-              stop: function (event, ui) {
-                  // IE doesn't register the blur when sorting
-                  // so trigger focusout handlers to remove .ui-state-focus
-                  ui.item.children("h4").triggerHandler("focusout");
-
-                  // Refresh accordion to handle new order
-                  $(this).accordion("refresh");
-              }
-          });
         }); // <-- $(function () {
     </script>
 }

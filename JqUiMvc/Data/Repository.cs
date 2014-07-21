@@ -38,18 +38,14 @@ namespace JqUiMvc.Data
                 new Site{ID=9,Name="Site Nine"},
             };
         }
-        public static IEnumerable<Room> GetRooms(int siteID)
+        public static IEnumerable<Room> GetRooms()
         {
-            if (siteID == DefaultSiteID)
-                return new Room[]{
-                    new Room{ID=51,SiteID=siteID,Name="Room AAA"},
-                    new Room{ID=52,SiteID=siteID,Name="Room BBB"},
-                    new Room{ID=53,SiteID=siteID,Name="Room CCC"},
-            };
-            else
-                return new Room[]{
-                new Room{ID=63,SiteID=siteID,Name="Room OOO"},
-                new Room{ID=64,SiteID=siteID,Name="Room PPP"},
+            return new Room[]{
+                new Room{ID=51,SiteID=9,Name="Room AAA"},
+                new Room{ID=52,SiteID=9,Name="Room BBB"},
+                new Room{ID=53,SiteID=9,Name="Room CCC"},
+                new Room{ID=63,SiteID=8,Name="Room OOO"},
+                new Room{ID=64,SiteID=8,Name="Room PPP"},
             };
         }
         public static int? ID;
