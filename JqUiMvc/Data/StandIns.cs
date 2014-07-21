@@ -18,7 +18,11 @@ namespace JqUiMvc.Data
     {
 
     }
-    public class AgendaItem : Thing
+    public class Room: Thing
+    {
+        public int SiteID { get; set; }
+    }
+    public class AgendaTopic : Thing
     {
         public int AgendaCategoryID { get; set; }
         public int DisplayOrder { get; set; }
@@ -37,6 +41,13 @@ namespace JqUiMvc.Data
         public bool AllowAM { get; set; }
         public bool IsProductModality { get; set; }
 
-        public IEnumerable<AgendaItem> Items { get; set; }
+        public IEnumerable<AgendaTopic> Items { get; set; }
+    }
+    public class AgendaItem : Thing
+    {
+        public Room Room { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public int? AgendaTopicID { get; set; }
     }
 }

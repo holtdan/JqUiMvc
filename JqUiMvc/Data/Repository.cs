@@ -38,6 +38,20 @@ namespace JqUiMvc.Data
                 new Site{ID=9,Name="Site Nine"},
             };
         }
+        public static IEnumerable<Room> GetRooms(int siteID)
+        {
+            if (siteID == DefaultSiteID)
+                return new Room[]{
+                    new Room{ID=51,SiteID=siteID,Name="Room AAA"},
+                    new Room{ID=52,SiteID=siteID,Name="Room BBB"},
+                    new Room{ID=53,SiteID=siteID,Name="Room CCC"},
+            };
+            else
+                return new Room[]{
+                new Room{ID=63,SiteID=siteID,Name="Room OOO"},
+                new Room{ID=64,SiteID=siteID,Name="Room PPP"},
+            };
+        }
         public static int? ID;
         public static Dictionary<string, StepState> Dbs = new Dictionary<string, StepState>();
         //public static bool HasDatabaseCore { get { return ID != null; } }
@@ -79,24 +93,24 @@ namespace JqUiMvc.Data
         {
             var all = new AgendaCategory[]{
                 new AgendaCategory{ID=1,Name="Category Sample X", IsActive=false,
-                Items = new AgendaItem[]{}},
+                Items = new AgendaTopic[]{}},
                 new AgendaCategory{ID=2,Name="Category Meal 1", IsActive=true, DisplayOrder=9, AllowAM=true, IsMeal=true,
-                Items = new AgendaItem[]{
-                    new AgendaItem{ID=21,Name="Dinner", DisplayOrder=3, AllowAM=true, IsMeal=true},
-                    new AgendaItem{ID=22,Name="Lunch", DisplayOrder=2, AllowAM=false, IsMeal=true},
-                    new AgendaItem{ID=23,Name="Breakfast", DisplayOrder=1, AllowAM=true, IsMeal=true},
+                Items = new AgendaTopic[]{
+                    new AgendaTopic{ID=21,Name="Dinner", DisplayOrder=3, AllowAM=true, IsMeal=true},
+                    new AgendaTopic{ID=22,Name="Lunch", DisplayOrder=2, AllowAM=false, IsMeal=true},
+                    new AgendaTopic{ID=23,Name="Breakfast", DisplayOrder=1, AllowAM=true, IsMeal=true},
                 }},
                 new AgendaCategory{ID=3,Name="Category Sample 2", IsActive=true, DisplayOrder=3, AllowAM=false, IsMeal=false,
-                Items = new AgendaItem[]{
-                    new AgendaItem{ID=31,Name="Topic N", DisplayOrder=3, AllowAM=true},
-                    new AgendaItem{ID=32,Name="Topic O", DisplayOrder=2, AllowAM=false},
-                    new AgendaItem{ID=33,Name="Topic P", DisplayOrder=1, AllowAM=true},
+                Items = new AgendaTopic[]{
+                    new AgendaTopic{ID=31,Name="Topic N", DisplayOrder=3, AllowAM=true},
+                    new AgendaTopic{ID=32,Name="Topic O", DisplayOrder=2, AllowAM=false},
+                    new AgendaTopic{ID=33,Name="Topic P", DisplayOrder=1, AllowAM=true},
                 }},
                 new AgendaCategory{ID=4,Name="Category Test 1", IsActive=true, DisplayOrder=1, AllowAM=true, IsMeal=false,
-                Items = new AgendaItem[]{
-                    new AgendaItem{ID=41,Name="Topic X", DisplayOrder=3, AllowAM=true},
-                    new AgendaItem{ID=42,Name="Topic Y", DisplayOrder=2, AllowAM=false},
-                    new AgendaItem{ID=43,Name="Topic Z", DisplayOrder=1, AllowAM=true},
+                Items = new AgendaTopic[]{
+                    new AgendaTopic{ID=41,Name="Topic X", DisplayOrder=3, AllowAM=true},
+                    new AgendaTopic{ID=42,Name="Topic Y", DisplayOrder=2, AllowAM=false},
+                    new AgendaTopic{ID=43,Name="Topic Z", DisplayOrder=1, AllowAM=true},
                 }},
             };
 

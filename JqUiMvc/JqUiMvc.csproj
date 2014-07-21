@@ -120,6 +120,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Data\Repository.cs" />
     <Compile Include="Data\StandIns.cs" />
+    <Compile Include="Data\VisitAgendaModel.cs" />
     <Compile Include="Data\VisitModel.cs" />
     <Compile Include="Data\VisitTypeScheduleConfig.cs" />
     <Compile Include="Global.asax.cs">

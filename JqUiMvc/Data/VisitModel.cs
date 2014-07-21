@@ -15,6 +15,7 @@ namespace JqUiMvc.Data
         public DateTime EndDate { get; set; }
         public bool IsOffSite { get; set; }
         public int NumAttendees { get; set; }
+        public VisitAgendaModel Agenda { get; set; }
         /// <summary>
         /// Infers from StartDate/EndDate values
         /// TODO: Finish! Hours calc not right!

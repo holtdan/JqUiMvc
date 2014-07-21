@@ -15,15 +15,27 @@
             /*height: 200px;*/
             /*display: inline;*/
         }
-
+        .beAgendaDayToolbar {
+            border: solid 1px black;
+        }
         .agendaDay {
-            width: 400px;
+            /*width: 400px;*/
+            /*width: 100%;*/
             height: 100%;
             min-height: 100px;
             float: left;
             /*margin-top: 1em;*/
             margin-left: 1em;
             display: inline;
+            border: solid 1px black;
+            overflow:auto;
+        }
+        .beAgendaRoom {
+            width: 400px;
+            margin-left: 0.5em;
+            display: inline;
+            float: left;
+            border: solid 1px black;
         }
         /* style the list to maximize the droppable hitarea */
         #day1 ol {
@@ -50,6 +62,8 @@
     <button id="button" class="ui-state-default ui-corner-all">Show</button>
     <div class="Xcol-md-12">
         <div class="agendaPalette ">
+            <input type="radio" title="Ripple" />Topics
+            <input type="radio" title="Fixed" />Meals
             @*<div id="effect" class="ui-widget-content ui-corner-all">*@
             <div id="agendaCategories">
                 @foreach (var cat in ViewBag.AgendaCats)
@@ -94,8 +108,22 @@
 
         <div id="day1" class="agendaDay">
             <h3 class="ui-widget-header">Day 1</h3>
-            <p class="placeholder">Add your items here</p>
-            <div id="accordion1">
+            <div class="beAgendaDayToolbar">
+                <button id="addRoom">+ Room</button>
+                @*<input type="button" title="+ Room">+ Room</input>*@
+                <b>Time:</b>
+                <input type="radio" title="Ripple" />Ripple
+                <input type="radio" title="Fixed" />Fixed
+                <b>View:</b>
+                <input type="radio" title="Ripple" />List
+                <input type="radio" title="Fixed" />Time
+            </div>
+            <div class="beAgendaRooms" id="beAgendaRooms">
+                <div class="beAgendaRoom">
+                    <h4 class="ui-widget-header">Room X</h4>
+                    <p class="placeholder">Add your items here</p>
+                    <div id="accordion1"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -118,6 +146,16 @@
             $('#accordion1').append(ai);
         }
         $(function () {
+            $("#addRoom").click(function () {
+                var accorionId = new Date().getTime();
+                var html =
+                    '<div class="beAgendaRoom">' +
+                    '<h4 class="ui-widget-header">Room X</h4>' +
+                    '<p class="placeholder">Add your items here</p>' +
+                    '<div id="accordion' + accorionId + '"></div>' +
+                '</div>';
+                $(html).appendTo('#beAgendaRooms')
+            });
             $("#button").click(function () {
                 var options = {};
                 $(".agendaPalette").toggle("slide", options, 500);
