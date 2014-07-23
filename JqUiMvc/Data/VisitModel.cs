@@ -16,6 +16,15 @@ namespace JqUiMvc.Data
         public bool IsOffSite { get; set; }
         public int NumAttendees { get; set; }
         public VisitAgendaModel Agenda { get; set; }
+
+        public IEnumerable<Room> GetRooms(DateTime? forDay = null)
+        {
+            
+            if (Agenda.Items.Count() == 0)
+                return new Room[] { Repository.GetRooms().Where(r=>r.SiteID == this.SiteID).FirstOrDefault() };
+            else
+                return Agenda.Items.Where(a => a.Start.Date == (forDay ?? this.StartDate.Date)).Select(a => a.Room);
+        }
         /// <summary>
         /// Infers from StartDate/EndDate values
         /// TODO: Finish! Hours calc not right!

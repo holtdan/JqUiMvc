@@ -260,6 +260,7 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Agenda\Index.cshtml" />
     <Content Include="Views\Shared\_AgendaRoom.cshtml" />
+    <Content Include="Views\Shared\_AgendaItem.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
