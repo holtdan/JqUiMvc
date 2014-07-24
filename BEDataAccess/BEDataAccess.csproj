@@ -51,6 +51,7 @@
     <Compile Include="Engine.cs" />
     <Compile Include="Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StandIns.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
