@@ -8,5 +8,12 @@ namespace BEDataAccess
 {
     public class Engine
     {
+        public void Go()
+        {
+            using(var dc = new BEDataContext())
+            {
+                var sites = dc.Sites;
+            }
+        }
     }
 }

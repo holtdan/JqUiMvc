@@ -14,6 +14,8 @@ namespace JqUiMvc.Tests.Data
         public void First()
         {
             var e = new BEDataAccess.Engine();
+
+            e.Go();
         }
     }
 }
