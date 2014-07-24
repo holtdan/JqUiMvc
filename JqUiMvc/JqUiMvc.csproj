@@ -261,6 +261,7 @@
     <Content Include="Views\Agenda\Index.cshtml" />
     <Content Include="Views\Shared\_AgendaRoom.cshtml" />
     <Content Include="Views\Shared\_AgendaItem.cshtml" />
+    <Content Include="Views\Test\JqUiCalendar.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "JqUiCalendar";
+    Layout = "~/Views/Shared/_LayoutJustScripts.cshtml";
+}
+@section Styles
+{
+    <style>
+        div {
+            border: solid 1px black;
+        }
+    </style>
+}
+<h2>JqUiCalendar</h2>
+<div class="container">
+    <h3>Full</h3>
+    <div class="row">
+        <div>Select the Visit Date:</div>
+        @using (Html.BeginForm("VisitInfo_SAC", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2">Start/End Time:</label>
+                <div class="col-md-5">
+                    <div id="fullSlider"></div>
+                    <span id="fullSliderText">X - Y</span>
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="Show Available Dates" class="btn btn-primary btn-sm" />
+                </div>
+            </div>
+        }
+        <div id="fullCalendar"></div>
+    </div>
+    <h3>Hourly</h3>
+    <div class="row">
+        <div>Select the Visit Date:</div>
+        @using (Html.BeginForm("VisitInfo_SAC", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2">Duration:</label>
+                <div class="col-md-3">
+                    <div id="hourlyDurationSlider"></div>
+                    <span id="hourlyDurationSliderText">Z</span>
+                </div>
+                <label class="control-label col-md-2">Start/End Time:</label>
+                <div class="col-md-3">
+                    <div id="hourlyRangeSlider"></div>
+                    <span id="hourlyRangeSliderText">X Y</span>
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="Show Available Dates" class="btn btn-primary btn-sm" />
+                </div>
+            </div>
+        }
+        <div id="hourlyCalendar"></div>
+    </div>
+    <h3>Multi</h3>
+    <div class="row">
+        <div>Select the Visit Date:</div>
+        @using (Html.BeginForm("VisitInfo_SAC", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
+        {
+            <div class="form-group">
+                <label class="control-label col-md-2">First Day Starts:</label>
+                <div class="col-md-3">
+                    <div id="multiDay1StartsSlider"></div>
+                    <span id="multiDay1StartsSliderText">X</span>
+                </div>
+                <label class="control-label col-md-2">Last Day Ends:</label>
+                <div class="col-md-3">
+                    <div id="multiDayXEndsSlider"></div>
+                    <span id="multiDayXEndsSliderText">Y</span>
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" value="Show Available Dates" class="btn btn-primary btn-sm" />
+                </div>
+            </div>
+        }
+        <div id="multiCalendar"></div>
+    </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            // Full Day
+            $("#fullSlider").slider({
+                range: true,
+                min: 0,
+                max: 16,
+                values: [3, 13],
+                slide: function (event, ui) {
+                    var texted = ui.values[0] + " - " + ui.values[1];
+                    $("#fullSliderText").html(texted);
+                }
+            });
+            $("#fullCalendar").datepicker({
+                numberOfMonths: 2,
+                showButtonPanel: true
+            });
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            // Hourly
+            $("#hourlyDurationSlider").slider({ /////////////////// Duration
+                range: "min",
+                min: 0,
+                max: 16,
+                values: [5],
+                slide: function (event, ui) {
+                    var texted = ui.value;
+                    $("#hourlyDurationSliderText").html(texted);
+                }
+            });
+            $("#hourlyRangeSlider").slider({ /////////////////// Range
+                range: true,
+                min: 0,
+                max: 16,
+                values: [3, 13],
+                slide: function (event, ui) {
+                    var texted = ui.values[0] + " - " + ui.values[1];
+                    $("#hourlyRangeSliderText").html(texted);
+                }
+            });
+            $("#hourlyCalendar").datepicker({
+                numberOfMonths: 2,
+                showButtonPanel: true
+            });
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            // Multiday
+            $("#multiDay1StartsSlider").slider({ /////////////////// Duration
+                range: "min",
+                min: 0,
+                max: 16,
+                values: [5],
+                slide: function (event, ui) {
+                    var texted = ui.value;
+                    $("#multiDay1StartsSliderText").html(texted);
+                }
+            });
+            $("#multiDayXEndsSlider").slider({ /////////////////// Duration
+                range: "min",
+                min: 0,
+                max: 16,
+                values: [5],
+                slide: function (event, ui) {
+                    var texted = ui.value;
+                    $("#multiDayXEndsSliderText").html(texted);
+                }
+            });
+            $("#multiCalendar").datepicker({
+                numberOfMonths: 2,
+                showButtonPanel: true
+            });
+        });
+    </script>
+}

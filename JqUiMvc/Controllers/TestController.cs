@@ -12,7 +12,7 @@ namespace JqUiMvc.Controllers
         // GET: /Test/
         public ActionResult Index()
         {
-            return View();
+            return View("JqUiCalendar");
         }
 	}
 }

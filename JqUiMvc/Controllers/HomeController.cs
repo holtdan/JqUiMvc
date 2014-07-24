@@ -48,8 +48,8 @@ namespace JqUiMvc.Controllers
         {
             var step = svvm.CurrStep;
 
-            if (step.View != "VisitInfo" && visitID == null)
-                throw new ArgumentException("Non-VisitInfo view requested with no Visit ID given.");
+            //if (step.View != "VisitInfo" && visitID == null)
+            //    throw new ArgumentException("Non-VisitInfo view requested with no Visit ID given.");
 
             //
             // We ALWAYS have a VisitInfoViewModel handy
@@ -76,7 +76,7 @@ namespace JqUiMvc.Controllers
                     }
                 default:
                     {
-                        return new VisitViewModelBase() { StepState = step.State, VisitID = visitID.Value };
+                        return new VisitViewModelBase() { StepState = step.State, VisitID = visitID??0 };
                     }
             }
         }
