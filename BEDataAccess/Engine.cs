@@ -10,9 +10,12 @@ namespace BEDataAccess
     {
         public void Go()
         {
-            using(var dc = new BEDataContext())
+            using (var dc = new BEDataContext())
             {
-                var sites = dc.Sites;
+                //var sites = dc.Sites;
+                dc.Sites.Add(new Site { ID = 8, Name = "Site Eight" });
+                dc.Sites.Add(new Site { ID = 9, Name = "Site Nine" });
+                dc.SaveChanges();
             }
         }
     }

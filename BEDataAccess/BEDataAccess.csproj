@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BEDataContext.cs" />
+    <Compile Include="DbSeeder.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Site.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
