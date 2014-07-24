@@ -17,7 +17,7 @@ namespace BEDataAccess
         {
             using (var dc = new BEDataContext())
             {
-                var sites = dc.Sites;
+                var sites = dc.Sites.ToList();
                 //dc.Sites.Add(new Site { ID = 81, Name = "Site Eight1" });
                 //dc.Sites.Add(new Site { ID = 91, Name = "Site Nine1" });
                 //dc.SaveChanges();

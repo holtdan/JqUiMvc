@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace BEDataAccess
 {
-    class DbSeeder : DropCreateDatabaseIfModelChanges<BEDataContext> //DropCreateDatabaseAlways<BEDataContext>
+    class DbSeeder : DropCreateDatabaseIfModelChanges<BEDataContext> 
+        //DropCreateDatabaseAlways<BEDataContext>
     {
         protected override void Seed(BEDataContext dc)
         {
@@ -18,8 +19,8 @@ namespace BEDataAccess
         BEDataContext LoadSites ( BEDataContext dc )
         {
             var sites = new SITES[]{
-                new SITES{SiteName="Site A",DateFormat="mm/dd/yyyy", SiteType="E", DefaultStartTime_FullDay="9:00", DefaultEndTime_FullDay="17:00", DefaultStartTime_AM="8:30", DefaultEndTime_AM="12:00", DefaultStartTime_PM="12:00",  DefaultEndTime_PM="16:30", MinimumVisitLength=0.5F, MaximumVisitLength=22, MaxVisitsPerDay=2},
-                new SITES{SiteName="Site B",DateFormat="dd/mm/yyyy", SiteType="E", DefaultStartTime_FullDay="8:00", DefaultEndTime_FullDay="16:00", DefaultStartTime_AM="9:30", DefaultEndTime_AM="13:00", DefaultStartTime_PM="13:00",  DefaultEndTime_PM="17:00", MinimumVisitLength=1, MaximumVisitLength=3, MaxVisitsPerDay=1},
+                new SITES{SITENAME="Site A",DateFormat="mm/dd/yyyy", SiteType="E", DefaultStartTime_FullDay="9:00", DefaultEndTime_FullDay="17:00", DefaultStartTime_AM="8:30", DefaultEndTime_AM="12:00", DefaultStartTime_PM="12:00",  DefaultEndTime_PM="16:30", MinimumVisitLength=0.5F, MaximumVisitLength=22, MaxVisitsPerDay=2},
+                new SITES{SITENAME="Site B",DateFormat="dd/mm/yyyy", SiteType="E", DefaultStartTime_FullDay="8:00", DefaultEndTime_FullDay="16:00", DefaultStartTime_AM="9:30", DefaultEndTime_AM="13:00", DefaultStartTime_PM="13:00",  DefaultEndTime_PM="17:00", MinimumVisitLength=1, MaximumVisitLength=3, MaxVisitsPerDay=1},
             };
 
             sites[0].Rooms = new ROOMS[] { 
@@ -35,6 +36,24 @@ namespace BEDataAccess
 
             foreach (var s in sites)
                 dc.Sites.Add(s);
+
+            var visTypes = new EventType[]{
+                new EventType{BriefingOrEvent="B",EventType1="Briefing A",CountsTowardTarget=1,ActiveFlag=-1,DisplayOrder=2},
+                new EventType{BriefingOrEvent="B",EventType1="Briefing B",CountsTowardTarget=1,ActiveFlag=-1,DisplayOrder=5},
+                new EventType{BriefingOrEvent="B",EventType1="Briefing C",CountsTowardTarget=1,ActiveFlag=-1,DisplayOrder=7},
+            };
+
+            var siteTypes = new SiteEvents[]{
+                new SiteEvents{Site=sites[0],VisitType=visTypes[0],ActiveFlag=-1,MinSchedulingDays=2,VisitApprovalRequired=0,VisitDocumentsRequired=0,AMCanSchedule=0},
+                new SiteEvents{Site=sites[0],VisitType=visTypes[1],ActiveFlag=-1,MinSchedulingDays=3,VisitApprovalRequired=-1,VisitDocumentsRequired=0,AMCanSchedule=-1},
+                new SiteEvents{Site=sites[0],VisitType=visTypes[2],ActiveFlag=-1,MinSchedulingDays=5,VisitApprovalRequired=0,VisitDocumentsRequired=0,AMCanSchedule=-1},
+
+                new SiteEvents{Site=sites[1],VisitType=visTypes[0],ActiveFlag=-1,MinSchedulingDays=3,VisitApprovalRequired=-1,VisitDocumentsRequired=-1,AMCanSchedule=-1},
+                new SiteEvents{Site=sites[1],VisitType=visTypes[1],ActiveFlag=-1,MinSchedulingDays=5,VisitApprovalRequired=-1,VisitDocumentsRequired=-1,AMCanSchedule=-1},
+            };
+
+            foreach (var s in siteTypes)
+                dc.SiteEvents.Add(s);
 
             return dc;
         }

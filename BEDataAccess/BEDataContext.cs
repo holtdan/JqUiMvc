@@ -12,5 +12,6 @@ namespace BEDataAccess
         public DbSet<SITES> Sites { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<ROOMS> Rooms { get; set; }
+        public DbSet<SiteEvents> SiteEvents { get; set; }
     }
 }
