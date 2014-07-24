@@ -82,6 +82,7 @@
     <Reference Include="System.Net.Http.WebRequest" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DbEngineDriver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
@@ -92,6 +93,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BEDataAccess\BEDataAccess.csproj">
+      <Project>{bda363a0-ce2f-423f-97ba-13c3723a9d94}</Project>
+      <Name>BEDataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\JqUiMvc\JqUiMvc.csproj">
       <Project>{15748472-7A16-4F00-883B-6D92B57B053C}</Project>
       <Name>JqUiMvc</Name>

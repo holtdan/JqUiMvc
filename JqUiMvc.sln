@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JqUiMvc", "JqUiMvc\JqUiMvc.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JqUiMvc.Tests", "JqUiMvc.Tests\JqUiMvc.Tests.csproj", "{FA112DE0-7A33-4345-8EAA-E4C0DF08576C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BEDataAccess", "BEDataAccess\BEDataAccess.csproj", "{BDA363A0-CE2F-423F-97BA-13C3723A9D94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{FA112DE0-7A33-4345-8EAA-E4C0DF08576C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA112DE0-7A33-4345-8EAA-E4C0DF08576C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA112DE0-7A33-4345-8EAA-E4C0DF08576C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDA363A0-CE2F-423F-97BA-13C3723A9D94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDA363A0-CE2F-423F-97BA-13C3723A9D94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDA363A0-CE2F-423F-97BA-13C3723A9D94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDA363A0-CE2F-423F-97BA-13C3723A9D94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
