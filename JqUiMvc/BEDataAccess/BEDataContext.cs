@@ -9,6 +9,8 @@ namespace BEDataAccess
 {
     public class BEDataContext : DbContext
     {
+        public BEDataContext() : base("BEDataContext") { }
+
         public DbSet<SITES> Sites { get; set; }
         public DbSet<EventType> VisitTypes { get; set; }
         public DbSet<ROOMS> Rooms { get; set; }

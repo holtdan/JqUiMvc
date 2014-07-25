@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using BEDataAccess;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,18 @@ namespace JqUiMvc.Tests.Data
             var e = new BEDataAccess.Engine();
 
             e.Go();
+        }
+
+        [TestMethod]
+        public void SiteEvents()
+        {
+            var e = new BEDataAccess.Engine();
+
+            //using (var dc = new BEDataContext())
+            //{
+            //    var sites = dc.Sites.ToList();
+            //    var visTypes = dc.SiteEvents.Where(r => r.SiteID == 1).Select(s=>s.VisitType);
+            //}
         }
     }
 }

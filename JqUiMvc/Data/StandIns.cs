@@ -43,13 +43,5 @@ namespace JqUiMvc.Data
 
         public IEnumerable<AgendaTopic> Items { get; set; }
     }
-    public class AgendaItem : Thing
-    {
-        public Room Room { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public int? AgendaTopicID { get; set; }
-
-        public string InstanceID { get; set; }
-    }
+    
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BEDataAccess.Models;
 
 namespace JqUiMvc.Data
 {
@@ -13,7 +14,7 @@ namespace JqUiMvc.Data
             Repository.Dbs.Clear();
             Repository.VisitModel = null;
         }
-        public const int DefaultSiteID = 9;
+        public const int DefaultSiteID = 1;
 
         public static VisitModel VisitModel;
 

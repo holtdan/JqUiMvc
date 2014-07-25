@@ -39,10 +39,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -115,17 +122,20 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AgendaController.cs" />
+    <Compile Include="BEDataAccess\BEDataContext.cs" />
+    <Compile Include="BEDataAccess\DbSeeder.cs" />
+    <Compile Include="BEDataAccess\Models\VisitAgendaModel.cs" />
+    <Compile Include="BEDataAccess\Models\VisitModel.cs" />
+    <Compile Include="BEDataAccess\StandIns.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Data\Repository.cs" />
     <Compile Include="Data\StandIns.cs" />
-    <Compile Include="Data\VisitAgendaModel.cs" />
-    <Compile Include="Data\VisitModel.cs" />
     <Compile Include="Data\VisitTypeScheduleConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SaveAndContinueParam.cs" />
     <Compile Include="Models\ScheduleVisitTaskViewModel.cs" />
     <Compile Include="Models\StepViewModel.cs" />
@@ -263,7 +273,6 @@
     <Content Include="Views\Shared\_AgendaItem.cshtml" />
     <Content Include="Views\Test\JqUiCalendar.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

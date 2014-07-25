@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BEDataAccess;
 
 namespace JqUiMvc.Models
 {
@@ -69,18 +70,18 @@ namespace JqUiMvc.Models
         {
             this.VisitID = 0;
             this.VisitName = "New Request";
-
-            using ( var dc = new Repository())
+            //var e = new BEDataAccess.Engine();
+            using (var dc = new BEDataContext())
             {
                 this.SiteID = Repository.DefaultSiteID; // this would be user's default site
 
-                var sites = Repository.GetSites();
-                var visTypes = Repository.GetVisitTypes(this.SiteID);
+                var sites = dc.Sites.ToList();
+                var visTypes = dc.SiteEvents.Where(r => r.SiteID == this.SiteID).Select(s => s.VisitType).ToList();
 
-                this.VisitTypeID = visTypes.First().ID;
+                this.SiteSelList = new SelectList(sites, "SITEID", "SITENAME", this.SiteID);
+                this.VisitTypeSelList = new SelectList(visTypes, "EventTypeID", "EventType1", this.VisitTypeID);
 
-                this.SiteSelList = new SelectList(sites, "ID", "Name", this.SiteID);
-                this.VisitTypeSelList = new SelectList(visTypes, "ID", "Name", this.VisitTypeID);
+                this.VisitTypeID = visTypes.First().EventTypeID;
             }
         }
         /// <summary>
@@ -107,13 +108,13 @@ namespace JqUiMvc.Models
         }
         public VisitInfoViewModel Fluff()
         {
-            using (var dc = new Repository())
+            using (var dc = new BEDataContext())
             {
-                var sites = Repository.GetSites();
-                var visTypes = Repository.GetVisitTypes(this.SiteID);
+                var sites = dc.Sites;
+                var visTypes = dc.SiteEvents.Where(r => r.SiteID == this.SiteID).Select(s => s.VisitType);
 
-                this.SiteSelList = new SelectList(sites, "ID", "Name", this.SiteID);
-                this.VisitTypeSelList = new SelectList(visTypes, "ID", "Name", this.VisitTypeID);
+                this.SiteSelList = new SelectList(sites, "SITEID", "SITENAME", this.SiteID);
+                this.VisitTypeSelList = new SelectList(visTypes, "EventTypeID", "EventTypeID1", this.VisitTypeID);
             }
 
             return this;
