@@ -272,6 +272,7 @@
     <Content Include="Views\Shared\_AgendaRoom.cshtml" />
     <Content Include="Views\Shared\_AgendaItem.cshtml" />
     <Content Include="Views\Test\JqUiCalendar.cshtml" />
+    <Content Include="Views\Shared\_VisitSelectDateFull.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

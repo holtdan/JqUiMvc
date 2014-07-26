@@ -14,6 +14,7 @@ namespace JqUiMvc.Models
         [HiddenInput(DisplayValue = false)]
         [Display(Name = "Location")]
         public int SiteID { get; set; }
+        public SITES Site { get; set; }
 
         [HiddenInput(DisplayValue = false)]
         [Display(Name = "Visit Type")]
@@ -81,6 +82,7 @@ namespace JqUiMvc.Models
                 this.SiteSelList = new SelectList(sites, "SITEID", "SITENAME", this.SiteID);
                 this.VisitTypeSelList = new SelectList(visTypes, "EventTypeID", "EventType1", this.VisitTypeID);
 
+                this.Site = sites.Where(s => s.SITEID == this.SiteID).Single();
                 this.VisitTypeID = visTypes.First().EventTypeID;
             }
         }

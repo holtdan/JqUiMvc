@@ -1,0 +1,63 @@
+﻿@model JqUiMvc.Models.VisitInfoViewModel
+@section Styles
+{
+    <style>
+        div {
+            border: solid 1px black;
+        }
+    </style>
+}
+<div class="row">
+    <div>Select the Visit Date:</div>
+    @using (Html.BeginForm("VisitInfo_SAC", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
+    {
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Start/End Time:</label>
+            <div class="col-md-5">
+                <div id="fullSlider"></div>
+                <span id="fullSliderText">X - Y</span>
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Show Available Dates" class="btn btn-primary btn-sm" />
+            </div>
+        </div>
+    }
+    <div id="fullCalendar"></div>
+</div>
+@*@section Scripts*@
+{
+    <script type="text/javascript">
+        $(function () {
+            console.log("_VisitSelectDateFull")
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            // Full Day
+            $("#fullSlider").slider({
+                range: true,
+                min: 0,
+                max: 23,
+                values: [9, 13],
+                slide: function (event, ui) {
+                    var texted = ui.values[0] + " - " + ui.values[1];
+                    $("#fullSliderText").html(texted);
+                }
+            });
+            $("#fullCalendar").datepicker({
+                numberOfMonths: 2,
+                showButtonPanel: true,
+                onSelect: function (dateText, inst) {
+                    var hours = $( "#fullSlider" ).slider( "option", "values" );
+
+                    var fixDate = new Date(dateText);
+                    fixDate.setHours(hours[0])
+                    $("#StartDate").val(fixDate);
+
+                    fixDate = new Date(dateText);
+                    fixDate.setHours(hours[1])
+                    $("#EndDate").val(fixDate);
+                    //window.location = 'http://mysite/events/Pages/default.aspx?dt=' + dateText;
+                }
+            });
+        });
+    </script>
+@*}*@

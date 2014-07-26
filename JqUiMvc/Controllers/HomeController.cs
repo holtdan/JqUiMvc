@@ -32,6 +32,10 @@ namespace JqUiMvc.Controllers
 
             return View("VisitInfo", GetView ( vm ));
         }
+        public ActionResult GetCalendar(VisitInfoViewModel vm)
+        {
+	        return PartialView("_VisitSelectDateFull", vm);
+        }
         /// <summary>
         /// Go to a particular view.
         /// The controller doesn't care about the state of the on-screen data at this point. 

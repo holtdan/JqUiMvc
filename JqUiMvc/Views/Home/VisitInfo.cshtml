@@ -65,7 +65,7 @@
             @Html.ValidationMessageFor(model => model.VisitLength)
         </div>
     </div>
-    
+
     <div class="form-group">
         @Html.LabelFor(model => model.NumAttendees, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -73,26 +73,72 @@
             @Html.ValidationMessageFor(model => model.NumAttendees)
         </div>
     </div>
-    
-    if (Model.StartDate != null)
-    {
-        <div class="form-group">
-            <label class="control-label col-md-2">Date</label>
-            <div class="col-md-10">
-                @Model.StartDate.Value.ToShortDateString()&nbsp;-&nbsp;@Model.EndDate.Value.ToShortDateString()
-            </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Date</label>
+        <div class="col-md-10">
+            <a class="btn btn-primary" id="selectDateBtn">
+                @if (Model.StartDate == null)
+                {
+                    @:Select Date
+                }
+                else
+                {
+                    @Model.StartDate.Value.ToShortDateString()@:&nbsp;-&nbsp;@Model.EndDate.Value.ToShortDateString()
+                }
+            </a>
         </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Time</label>
-            <div class="col-md-10">
-                @Model.StartDate.Value.ToShortTimeString()&nbsp;-&nbsp;@Model.EndDate.Value.ToShortTimeString()
-            </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2">Time</label>
+        <div class="col-md-10" id="selectedTime">
+            @if (Model.StartDate != null)
+            {
+                @Model.StartDate.Value.ToShortTimeString()@:&nbsp;-&nbsp;@Model.EndDate.Value.ToShortTimeString()
+            }
         </div>
-        @* if ! AcctMgr *@
-        <div class="form-group">
-            <label class="control-label col-md-2">Room(s)</label>
-            <div class="col-md-10">
-            </div>
+    </div>
+    @* if ! AcctMgr *@
+    <div class="form-group">
+        <label class="control-label col-md-2">Room(s)</label>
+        <div class="col-md-10">
         </div>
-    }
+    </div>
+}
+<div id="beDlgGetDate">
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            console.log("VisitInfo")
+            dialog = $("#beDlgGetDate").dialog({
+                autoOpen: false,
+                //height: 500,
+                //width: 400,
+                modal: true,
+                buttons: {
+                    //"Create an account": addUser,
+                    Cancel: function () {
+                        dialog.dialog("close");
+                    }
+                },
+                close: function () {
+                    var startDate = new Date($("#StartDate").val());
+                    var endDate = new Date($("#EndDate").val());
+                    $("#selectDateBtn").text(startDate.toDateString() + " - " + endDate.toDateString())
+                    $("#selectedTime").text(startDate.toTimeString() + " - " + endDate.toTimeString())
+                    //form[0].reset();
+                    //allFields.removeClass("ui-state-error");
+                    dialog.dialog("close");
+                }
+            });
+            $("#selectDateBtn").click(function (e) {
+                //e.PreventDefault();
+                e.stopPropagation();
+                dialog.load("@Url.Action("GetCalendar", "Home", new { area = "" })");
+                dialog.dialog("open");
+            });
+        });
+    </script>
 }

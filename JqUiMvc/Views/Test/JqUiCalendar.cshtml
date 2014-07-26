@@ -17,6 +17,7 @@
         <div>Select the Visit Date:</div>
         @using (Html.BeginForm("VisitInfo_SAC", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
         {
+            
             <div class="form-group">
                 <label class="control-label col-md-2">Start/End Time:</label>
                 <div class="col-md-5">
@@ -95,7 +96,10 @@
             });
             $("#fullCalendar").datepicker({
                 numberOfMonths: 2,
-                showButtonPanel: true
+                showButtonPanel: true,
+                onSelect: function (dateText, inst) {
+                    //window.location = 'http://mysite/events/Pages/default.aspx?dt=' + dateText;
+                }
             });
             ///////////////////////////////////////////////////////////////////////////////////////////////
             // Hourly
