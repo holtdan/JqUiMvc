@@ -53,6 +53,10 @@ namespace JqUiMvc.Models
         [Display(Name = "End Date")]
         public DateTime? EndDate { get; set; }
 
+        [Required]
+        [Display(Name = "Room ID")]
+        public int? RoomID { get; set; }
+
         [Display(Name = "# Attendees")]
         public SelectList AttendeeSelList { get; set; }
 
@@ -85,6 +89,10 @@ namespace JqUiMvc.Models
                 this.Site = sites.Where(s => s.SITEID == this.SiteID).Single();
                 this.VisitTypeID = visTypes.First().EventTypeID;
             }
+#if(DEBUG)
+            this.VisitLength = VLength.Full;
+            this.NumAttendees = 5;
+#endif
         }
         /// <summary>
         /// Prepare the view model from existing Visit

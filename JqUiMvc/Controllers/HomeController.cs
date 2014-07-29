@@ -32,9 +32,17 @@ namespace JqUiMvc.Controllers
 
             return View("VisitInfo", GetView ( vm ));
         }
-        public ActionResult GetCalendar(VisitInfoViewModel vm)
+        public ActionResult GetCalendar_Hourly(VisitInfoViewModel vm)
         {
-	        return PartialView("_VisitSelectDateFull", vm);
+            return PartialView("_VisitSelectDateHourly");
+        }
+        public ActionResult GetCalendar_Full(VisitInfoViewModel vm)
+        {
+	        return PartialView("_VisitSelectDateFull");
+        }
+        public ActionResult GetCalendar_Multi(VisitInfoViewModel vm)
+        {
+            return PartialView("_VisitSelectDateMulti");
         }
         /// <summary>
         /// Go to a particular view.

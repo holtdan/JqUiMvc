@@ -8,10 +8,11 @@
     </style>
 }
 <div class="row">
-    <div>Select the Visit Date:</div>
     @using (Html.BeginForm("VisitInfo_SAC", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
     {
-
+        <input type="hidden" id="storeStart"> @*BeCalendarDialogs.js looks here for data when User clicks OK*@
+        <input type="hidden" id="storeEnd">
+        
         <div class="form-group">
             <label class="control-label col-md-2">Start/End Time:</label>
             <div class="col-md-5">
@@ -25,39 +26,60 @@
     }
     <div id="fullCalendar"></div>
 </div>
-@*@section Scripts*@
-{
-    <script type="text/javascript">
-        $(function () {
-            console.log("_VisitSelectDateFull")
-            ///////////////////////////////////////////////////////////////////////////////////////////////
-            // Full Day
-            $("#fullSlider").slider({
-                range: true,
-                min: 0,
-                max: 23,
-                values: [9, 13],
-                slide: function (event, ui) {
-                    var texted = ui.values[0] + " - " + ui.values[1];
-                    $("#fullSliderText").html(texted);
-                }
-            });
-            $("#fullCalendar").datepicker({
-                numberOfMonths: 2,
-                showButtonPanel: true,
-                onSelect: function (dateText, inst) {
-                    var hours = $( "#fullSlider" ).slider( "option", "values" );
+<script type="text/javascript">
+    function ToTime(totMins) {
+        var hours = parseInt(totMins / 60, 10);
+        var mins = parseInt(totMins % 60, 10);
 
-                    var fixDate = new Date(dateText);
-                    fixDate.setHours(hours[0])
-                    $("#StartDate").val(fixDate);
+        return hours + ":" + (mins<10?"0":"") + mins;
+    }
+    $(function () {
+        console.log("_VisitSelectDateFull");
 
-                    fixDate = new Date(dateText);
-                    fixDate.setHours(hours[1])
-                    $("#EndDate").val(fixDate);
-                    //window.location = 'http://mysite/events/Pages/default.aspx?dt=' + dateText;
-                }
-            });
+        function StoreVals() {
+            var dateText = $("#fullCalendar").datepicker().val()
+            console.log(dateText);
+            var totMins = $("#fullSlider").slider("option", "values");
+
+            var hours = parseInt(totMins[0] / 60, 10);
+            var mins = parseInt(totMins[0] % 60, 10);
+
+            var fixDate = new Date(dateText);
+            fixDate.setHours(hours);
+            fixDate.setMinutes(mins);
+            $("#storeStart").val(fixDate);
+
+            hours = parseInt(totMins[1] / 60, 10);
+            mins = parseInt(totMins[1] % 60, 10);
+
+            fixDate = new Date(dateText);
+            fixDate.setHours(hours);
+            fixDate.setMinutes(mins);
+            $("#storeEnd").val(fixDate);
+
+            console.log('storeStart='+ $("#storeStart").val());
+            console.log($("#storeEnd").val());
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        // Full Day
+        $("#fullSlider").slider({
+            range: true,
+            min: 360, // 6:00am
+            max: 1439,// 23:59
+            step: 15, // 15 min intervals
+            values: [600, 900],
+            slide: function (event, ui) {
+                var texted = ToTime( ui.values[0] ) + " - " + ToTime ( ui.values[1] );
+                $("#fullSliderText").html(texted);
+                StoreVals();
+            }
         });
-    </script>
-@*}*@
+        $("#fullCalendar").datepicker({
+            numberOfMonths: 2,
+            onSelect: function (dateText, inst) {
+                StoreVals();
+            }
+        });
+    });
+</script>

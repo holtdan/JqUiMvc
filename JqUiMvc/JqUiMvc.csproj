@@ -227,6 +227,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\BriefingEdge\BeCalendar.js" />
+    <Content Include="Scripts\BriefingEdge\BeCalendarDialogs.js" />
     <Content Include="Scripts\BriefingEdge\BeDataSaveDialogs.js" />
     <Content Include="Scripts\BriefingEdge\date.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
