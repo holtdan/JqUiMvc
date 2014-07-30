@@ -136,7 +136,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\SaveAndContinueParam.cs" />
     <Compile Include="Models\ScheduleVisitTaskViewModel.cs" />
     <Compile Include="Models\StepViewModel.cs" />
     <Compile Include="Models\TaskStep.cs" />

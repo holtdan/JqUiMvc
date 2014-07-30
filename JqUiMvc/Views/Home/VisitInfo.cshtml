@@ -4,7 +4,7 @@
     ViewBag.Title = ViewBag.TaskViewModel.CurrStep.Name;
 }
 
-@using (Html.BeginForm("VisitInfo_SAC", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
+@using (Html.BeginForm("VisitInfo", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", area = "" }))
 {
     @Html.HiddenFor(model => model.VisitID)
     @Html.HiddenFor(model => model.SiteID)
@@ -110,47 +110,86 @@
 {
     <script src="~/Scripts/BriefingEdge/BeCalendarDialogs.js"></script>
     <script type="text/javascript">
-        $(function () {
-            console.log("VisitInfo");
-            $("#selectDateBtn").click(function (e) {
-                //e.PreventDefault();
-                e.stopPropagation();
-
-                // Num Attendees
-                var numAttsVal = $("#NumAttendees").val();
-
-                if (isNaN(parseInt(numAttsVal, 10))) {
-                    alert("Please enter a valid number of attendees.")
-                    return;
+    $(function () {
+        console.log("VisitInfo");
+        ///////////////////////////////
+        // User clicked Save & Continue
+        //
+        $(".beSaveAndContinue").click(function (e) {
+            //e.stopPropagation();
+            var valsd = $("#StartDate").val();
+            $("form").submit();
+            @*$.ajax({
+                    url: "@Url.Action("VisitInfo", "Home")",
+                    type: 'POST',
+                dataType: "json",
+                data: GetModel(),
+                success: function (d) {
+                    //$("#beViewHeaderMessage").text(d.message);
+                    console.log(d);
+                },
+                error: function errorFunc(data) {
+                    alert('error' + data.status);
                 }
-                var numAttsNum = parseInt(numAttsVal, 10);
-
-                // Visit Length
-                var calendarType = "";
-
-                if ($("#VisitLength_hourly").is(":checked"))
-                    calendarType = "_Hourly";
-                else if ($("#VisitLength_full").is(":checked"))
-                    calendarType = "_Full";
-                else if ($("#VisitLength_multi").is(":checked"))
-                    calendarType = "_Multi";
-                else
-                {
-                    alert("Please select a Visit Length: Hourly, Full Day or Multi-Day.")
-                    return;
-                }
-                var calUrl = "@Url.Action("GetCalendar", "Home", new { area = "" })".replace("GetCalendar", "GetCalendar" + calendarType);
-
-                ShowCalendarDialog(calUrl,
-                    function (startDate, endDate, roomID) {
-                        $("#StartDate").val(startDate);
-                        $("#EndDate").val(endDate);
-                        $("#RoomID").val(roomID);
-
-                        $("#selectDateBtn").text(startDate.toDateString() + " - " + endDate.toDateString())
-                        $("#selectedTime").text(startDate.toTimeString() + " - " + endDate.toTimeString())
-                    });
-            });
+            });*@
         });
+        $("#selectDateBtn").click(function (e) {
+            //e.PreventDefault();
+            e.stopPropagation();
+
+            // Num Attendees
+            var numAttsVal = $("#NumAttendees").val();
+
+            if (isNaN(parseInt(numAttsVal, 10))) {
+                alert("Please enter a valid number of attendees.")
+                return;
+            }
+            var numAttsNum = parseInt(numAttsVal, 10);
+
+            // Visit Length
+            var calendarType = "";
+
+            if ($("#VisitLength_hourly").is(":checked"))
+                calendarType = "_Hourly";
+            else if ($("#VisitLength_full").is(":checked"))
+                calendarType = "_Full";
+            else if ($("#VisitLength_multi").is(":checked"))
+                calendarType = "_Multi";
+            else {
+                alert("Please select a Visit Length: Hourly, Full Day or Multi-Day.")
+                return;
+            }
+            var calUrl = "@Url.Action("GetCalendar", "Home", new { area = "" })".replace("GetCalendar", "GetCalendar" + calendarType);
+
+            ShowCalendarDialog(calUrl,
+                function (startDate, endDate, roomID) {
+                    var sDate = new Date(startDate);
+                    var eDate = new Date(startDate);
+                    $("#StartDate").val(sDate);
+                    $("#EndDate").val(eDate);
+                    $("#RoomID").val(roomID);
+
+                    $("#selectDateBtn").text(sDate.toDateString() + " - " + eDate.toDateString())
+                    $("#selectedTime").text(sDate.toTimeString() + " - " + eDate.toTimeString())
+                });
+        });
+    });
+    function GetModel() {
+        var sd = $("#StartDate").val();
+
+        var model = {
+            "VisitID": $("#VisitID").val(),
+            "SiteID": $("#SiteID").val(),
+            "VisitTypeID": $("#VisitTypeID").val(),
+            "StartDate": $("#StartDate").val(),
+            "EndDate": $("#EndDate").val(),
+            "RoomID": $("#RoomID").val()//,
+            //"NumAttendees": $("#NumAttendees"),
+            //"IsOffSite": $("#IsOffsite"),
+            //"VisitLength": $("#VisitLength")
+        };
+
+        return model;
+    }
     </script>
 }

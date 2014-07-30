@@ -28,21 +28,26 @@ namespace JqUiMvc.Controllers
         {
             Repository.Reset();
 
-            var vm = new ScheduleVisitTaskViewModel();
+            var svvm = new ScheduleVisitTaskViewModel();
+            var vivm = new VisitInfoViewModel();
+            vivm.Load();
 
-            return View("VisitInfo", GetView ( vm ));
+            ViewBag.VisitInfoViewModel = vivm;
+            ViewBag.TaskViewModel = svvm;
+
+            return View("VisitInfo", vivm);
         }
-        public ActionResult GetCalendar_Hourly(VisitInfoViewModel vm)
+        [HttpPost]
+        public ActionResult VisitInfo(VisitInfoViewModel vivm)
         {
-            return PartialView("_VisitSelectDateHourly");
-        }
-        public ActionResult GetCalendar_Full(VisitInfoViewModel vm)
-        {
-	        return PartialView("_VisitSelectDateFull");
-        }
-        public ActionResult GetCalendar_Multi(VisitInfoViewModel vm)
-        {
-            return PartialView("_VisitSelectDateMulti");
+            var svvm = new ScheduleVisitTaskViewModel();
+
+            vivm.Fluff();
+
+            ViewBag.VisitInfoViewModel = vivm;
+            ViewBag.TaskViewModel = svvm;
+
+            return View("VisitInfo", vivm);
         }
         /// <summary>
         /// Go to a particular view.
@@ -99,29 +104,19 @@ namespace JqUiMvc.Controllers
         /// <param name="view"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult UpdateViewData(string view, int state)
-        {
-            var stepState = (StepState)state;
+        //[HttpPost]
+        //public ActionResult UpdateViewData(string view, int state)
+        //{
+        //    var stepState = (StepState)state;
 
-            Repository.Dbs[view] = stepState;
+        //    Repository.Dbs[view] = stepState;
 
-            return Json(new
-            {
-                success = true,
-                message = string.Format("{0} updated to {1}.", view, stepState)
-            });
-        }
-        [HttpPost]
-        public ActionResult VisitInfo_When_SAC(VisitInfoViewModel vm)
-        {
-            var svvm = new ScheduleVisitTaskViewModel("VisitInfo");
-
-            ViewBag.VisitInfoViewModel = vm.Fluff();
-            ViewBag.TaskViewModel = svvm;
-
-            return View(svvm.CurrStep.View, vm);
-        }
+        //    return Json(new
+        //    {
+        //        success = true,
+        //        message = string.Format("{0} updated to {1}.", view, stepState)
+        //    });
+        //}
         [HttpPost]
         public ActionResult VisitInfo_SAC(VisitInfoViewModel vm)
         {
@@ -188,41 +183,53 @@ namespace JqUiMvc.Controllers
         /// If the GoToView field is null in the param class, the next available
         /// view is called up.
         /// </summary>
-        [HttpPost]
-        public ActionResult SaveAndContinue(SaveAndContinueParam sacP)
-        {
-            // if sacP.State != modified: return error/warning 
+        //[HttpPost]
+        //public ActionResult SaveAndContinue(SaveAndContinueParam sacP)
+        //{
+        //    // if sacP.State != modified: return error/warning 
 
-            var vm = new ScheduleVisitTaskViewModel(sacP.CurrView);
+        //    var vm = new ScheduleVisitTaskViewModel(sacP.CurrView);
 
-            Repository.Dbs[sacP.CurrView] = StepState.Complete;
+        //    Repository.Dbs[sacP.CurrView] = StepState.Complete;
 
-            var gotoV = !string.IsNullOrEmpty(sacP.GoToView)
-                ? sacP.GoToView //TODO: validate
-                : vm.GetNextView(sacP.CurrView);
+        //    var gotoV = !string.IsNullOrEmpty(sacP.GoToView)
+        //        ? sacP.GoToView //TODO: validate
+        //        : vm.GetNextView(sacP.CurrView);
 
-            //return RedirectToAction("Navigate", new { view = Repository.GetNextView(sacP.CurrView) });
-            return Json(new { result = "Redirect", url = Url.Action("Navigate", "Home", new { area = "" }), view = gotoV });
-        }
+        //    //return RedirectToAction("Navigate", new { view = Repository.GetNextView(sacP.CurrView) });
+        //    return Json(new { result = "Redirect", url = Url.Action("Navigate", "Home", new { area = "" }), view = gotoV });
+        //}
         /// <summary>
         /// Used when user has made changes but chooses to navigate away and lose those changes.
         /// This _might_ not be necessary: simply calling Navigate might be OK. We'll see when it gets real-er.
         /// </summary>
-        [HttpPost]
-        public ActionResult DiscardAndContinue(SaveAndContinueParam sacP)
+        //[HttpPost]
+        //public ActionResult DiscardAndContinue(SaveAndContinueParam sacP)
+        //{
+        //    // if sacP.State != modified: return error/warning 
+
+        //    var vm = new ScheduleVisitTaskViewModel(sacP.CurrView);
+
+        //    Repository.Dbs[sacP.CurrView] = StepState.None; // or could be StepState.Complete
+
+        //    var gotoV = !string.IsNullOrEmpty(sacP.GoToView)
+        //        ? sacP.GoToView //TODO: validate
+        //        : vm.GetNextView(sacP.CurrView);
+
+        //    //return RedirectToAction("Navigate", new { view = Repository.GetNextView(sacP.CurrView) });
+        //    return Json(new { result = "Redirect", url = Url.Action("Navigate", "Home", new { area = "" }), view = gotoV });
+        //}
+        public ActionResult GetCalendar_Hourly(VisitInfoViewModel vm)
         {
-            // if sacP.State != modified: return error/warning 
-
-            var vm = new ScheduleVisitTaskViewModel(sacP.CurrView);
-
-            Repository.Dbs[sacP.CurrView] = StepState.None; // or could be StepState.Complete
-
-            var gotoV = !string.IsNullOrEmpty(sacP.GoToView)
-                ? sacP.GoToView //TODO: validate
-                : vm.GetNextView(sacP.CurrView);
-
-            //return RedirectToAction("Navigate", new { view = Repository.GetNextView(sacP.CurrView) });
-            return Json(new { result = "Redirect", url = Url.Action("Navigate", "Home", new { area = "" }), view = gotoV });
+            return PartialView("_VisitSelectDateHourly");
+        }
+        public ActionResult GetCalendar_Full(VisitInfoViewModel vm)
+        {
+            return PartialView("_VisitSelectDateFull");
+        }
+        public ActionResult GetCalendar_Multi(VisitInfoViewModel vm)
+        {
+            return PartialView("_VisitSelectDateMulti");
         }
     }
 }

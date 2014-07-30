@@ -6,9 +6,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BEDataAccess;
+using System.Diagnostics;
 
 namespace JqUiMvc.Models
 {
+    [DebuggerDisplay("{StartDate} {EndDate}")]
     public class VisitInfoViewModel : VisitViewModelBase
     {
         [HiddenInput(DisplayValue = false)]
@@ -120,11 +122,13 @@ namespace JqUiMvc.Models
         {
             using (var dc = new BEDataContext())
             {
-                var sites = dc.Sites;
-                var visTypes = dc.SiteEvents.Where(r => r.SiteID == this.SiteID).Select(s => s.VisitType);
+                var sites = dc.Sites.ToList();
+                var visTypes = dc.SiteEvents.Where(r => r.SiteID == this.SiteID).Select(s => s.VisitType).ToList();
 
                 this.SiteSelList = new SelectList(sites, "SITEID", "SITENAME", this.SiteID);
-                this.VisitTypeSelList = new SelectList(visTypes, "EventTypeID", "EventTypeID1", this.VisitTypeID);
+                this.VisitTypeSelList = new SelectList(visTypes, "EventTypeID", "EventType1", this.VisitTypeID);
+
+                this.Site = sites.Where(s => s.SITEID == this.SiteID).Single();
             }
 
             return this;

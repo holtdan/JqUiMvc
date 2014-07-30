@@ -16,10 +16,10 @@ function ShowCalendarDialog(urlAction, callbackWithDates) {
         width: 600,
         buttons: {
             "OK": function () {
-                var startDate = new Date($("#storeStart").val());
-                var endDate = new Date($("#storeEnd").val());
+                var startDate = Date.parse($("#storeStart").val());
+                var endDate = Date.parse($("#storeEnd").val());
                 var roomID = 2;
-                var yep = GetModel();
+                //var yep = GetModel();
                 $(this).dialog("close");
                 callbackWithDates(startDate, endDate, roomID);
             },
@@ -38,8 +38,8 @@ function GetModel()
         "VisitID" : $("#VisitID").val(),
         "SiteID" : $("#SiteID").val(),
         "VisitTypeID" : $("#VisitTypeID").val(),
-        "StartDate" : $("#storeStart").val(),
-        "EndDate" : $("#storeEnd").val()
+        "StartDate" : Date.parse( $("#storeStart").val()),
+        "EndDate" : Date.parse($("#storeEnd").val())
     };
 
     return model;
